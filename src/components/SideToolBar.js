@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './../SideToolBar.css'
 
 
-const SideToolbar = () => {
+const SideToolbar = ({ onDragStart }) => {
     const [zoomLevel, setZoomLevel] = useState(1); // Initial zoom level
     const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 }); // Initial canvas position
     const [undoHistory, setUndoHistory] = useState([]); // Array to store undo history
@@ -123,7 +123,7 @@ const SideToolbar = () => {
             <button className="toolbar-btn" onClick={() => handlePan('down')} title="Pan Down">&#8627;</button>
             <button className="toolbar-btn" onClick={handleFitToView} title="Zoom to Fit">&#8660;</button>
             <button className="toolbar-btn" onClick={handleZoomTo100} title="Zoom to 100%">&#8613;</button>
-            <button className="toolbar-btn" onClick={handleAddState} title="Add State">⬤</button>
+            <button className="toolbar-btn" onClick={handleAddState} title="Add State" onDragStart={onDragStart} draggable >⬤</button>
         </div>
     );
 };
