@@ -5,7 +5,7 @@ import 'reactflow/dist/style.css';
 import MenuBar from './MenuBar';
 import SideMenuButton from './SideMenuButton';
 import SidePane from './SidePane';
-import NodesEdgesTable from './NodesEdgesTable';
+import TempDragIcon from './TempDragIcon';
 
 const DEFAULT_NODE_DIAMETER = 75;
 
@@ -23,10 +23,15 @@ const nodeDefaults = {
     },
 };
 
+let id = 0;
+const getId = () => `q${id++}`;
+
+const node1 = getId()
+const node2 = getId()
 
 const initialNodes = [
-    { id: '1', type: 'input', position: { x: -100, y: 0 }, data: { label: 'Node 1' }, ...nodeDefaults },
-    { id: '2', position: { x: 100, y: 0 }, data: { label: 'Node 2' }, ...nodeDefaults },
+    { id: node1, type: 'input', position: { x: -100, y: 0 }, data: { label: node1 }, ...nodeDefaults },
+    { id: node2, position: { x: 100, y: 0 }, data: { label: node2 }, ...nodeDefaults },
 ];
 
 const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
@@ -60,11 +65,12 @@ export default function Editor() {
         e.preventDefault();
         const mousePosition = reactFlowInstance.screenToFlowPosition({ x: e.clientX, y: e.clientY });
         const position =  {x: mousePosition.x-DEFAULT_NODE_DIAMETER/2, y: mousePosition.y-DEFAULT_NODE_DIAMETER/2 }
+        const id = getId();
         const newNode = {
-            id: `node-${nodes.length + 1}`,
+            id: id,
             type: 'default',
             position,
-            data: { label: `Node ${nodes.length + 1}` }, 
+            data: { label: id }, 
             ...nodeDefaults
           };
           setNodes((nds) => nds.concat(newNode));
@@ -73,21 +79,10 @@ export default function Editor() {
     return (
         <div style={{ width: '100vw', height: '100vh' }}>
             <MenuBar />
+
             <SideMenuButton onClick={() => setIsPaneOpen(true)} />
             
-            <div
-                style={{
-                    position: 'absolute',
-                    top: '10px',
-                    left: '10px',
-                    cursor: 'grab',
-                }}
-                onDragStart={onDragStart}
-                draggable
-            >
-                {/* Node creation icon */}
-                <div style={{ width: '20px', height: '20px', backgroundColor: 'skyblue' }}></div>
-            </div>
+            <TempDragIcon onDragStart={onDragStart} />
 
             <ReactFlow
                 nodes={nodes}
@@ -100,11 +95,11 @@ export default function Editor() {
                 onDragOver={onDragOver}
                 fitView
             >
-            <Controls />
-            <Background variant="dots" gap={12} size={1} />
-        </ReactFlow>
-        <SidePane isOpen={isPaneOpen} onClose={() => setIsPaneOpen(false)} nodes={nodes} edges={edges} />
-        <NodesEdgesTable nodes={nodes} edges={edges} />
+                <Controls />
+                <Background variant="dots" gap={12} size={1} />
+            </ReactFlow>
+
+            <SidePane isOpen={isPaneOpen} onClose={() => setIsPaneOpen(false)} nodes={nodes} edges={edges} />
 
         </div>
     );
