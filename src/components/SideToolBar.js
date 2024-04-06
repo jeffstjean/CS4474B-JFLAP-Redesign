@@ -11,7 +11,7 @@ import {
 } from "@react-md/material-icons";
 
 
-const SideToolbar = () => {
+const SideToolbar = ({ onDragStart }) => {
     const [zoomLevel, setZoomLevel] = useState(1); // Initial zoom level
     const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 }); // Initial canvas position
     const [undoHistory, setUndoHistory] = useState([]); // Array to store undo history
@@ -131,7 +131,7 @@ const SideToolbar = () => {
 
     return (
         <div className="sidetoolbar">
-            <button className="toolbar-btn" onClick={handleAddState} title="Add State">
+            <button className="toolbar-btn" onClick={handleAddState} title="Add State" onDragStart={onDragStart} draggable>
                 <span className="material-icons">radio_button_unchecked</span>
             </button>
             <button className="toolbar-btn" onClick={() => handleDraw()} title="Draw">
