@@ -34,3 +34,7 @@
 .toolbar-btn:focus-visible {
     outline: none;
 }
+
+.white-icon {
+    fill: white;
+}

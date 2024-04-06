@@ -5,6 +5,7 @@
     background-color: #242424;
     color: #fff;
     padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
 }
 
 .menu-item {
