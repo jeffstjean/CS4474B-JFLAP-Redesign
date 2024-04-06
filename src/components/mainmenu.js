@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from 'react-router-dom';
 
 const projects = [
   {
@@ -63,17 +64,26 @@ const TopBar = () => {
   );
 };
 
-const ProjectTypes = () => (
-  <div className="project-types">
-    <div className="project-grid">
-      {projects.map((project) => (
-        <div key={project.id} className="project-column">
-          <img src={project.image} alt={project.alt} className="project-image" />
+const ProjectTypes = () => {
+    let navigate = useNavigate();
+  
+    const handleProjectClick = () => {
+      navigate('/editor'); // This will change the route to /editor
+    };
+  
+    return (
+      <div className="project-types">
+        <div className="project-grid">
+          {projects.map((project) => (
+            <div key={project.id} className="project-column" onClick={handleProjectClick}>
+              <img src={project.image} alt={project.alt} className="project-image" />
+              {/* Add the title and description here if needed */}
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-  </div>
-);
+      </div>
+    );
+  };
 
 const NewProjects = () => (
   <section className="new-projects">
@@ -93,7 +103,7 @@ const YourProjects = () => (
   </section>
 );
 
-function MyComponent() {
+function MainMenu() {
   return (
     <>
       <div className="window">
@@ -330,4 +340,4 @@ function MyComponent() {
   );
 }
 
-export default MyComponent;
+export default MainMenu;
