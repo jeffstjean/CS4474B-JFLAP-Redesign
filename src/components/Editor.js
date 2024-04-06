@@ -3,9 +3,11 @@ import ReactFlow, { Controls, Background, useNodesState, useEdgesState, addEdge,
 import 'reactflow/dist/style.css';
 
 import MenuBar from './MenuBar';
+import TopTitlebar from './TopTitleBar';
 import SideMenuButton from './SideMenuButton';
+import SideToolbar from './SideToolBar';
 import SidePane from './SidePane';
-import TempDragIcon from './TempDragIcon';
+import 'reactflow/dist/style.css';
 
 const DEFAULT_NODE_DIAMETER = 75;
 
@@ -77,30 +79,32 @@ export default function Editor() {
     }, [nodes, setNodes, reactFlowInstance])
 
     return (
-        <div style={{ width: '100vw', height: '100vh' }}>
-            <MenuBar />
+        <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
+            <div style={{ width: '80px', backgroundColor: '#333', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <SideToolbar onDragStart={onDragStart} />
+            </div>
+            <div style={{ flex: 1 }}>
 
-            <SideMenuButton onClick={() => setIsPaneOpen(true)} />
-            
-            <TempDragIcon onDragStart={onDragStart} />
+                <TopTitlebar />
+                <MenuBar />
+                <SideMenuButton onClick={() => setIsPaneOpen(true)} />
 
-            <ReactFlow
-                nodes={nodes}
-                edges={edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
-                onInit={setReactFlowInstance}
-                onDrop={onDrop}
-                onDragOver={onDragOver}
-                fitView
-            >
-                <Controls />
-                <Background variant="dots" gap={12} size={1} />
-            </ReactFlow>
-
-            <SidePane isOpen={isPaneOpen} onClose={() => setIsPaneOpen(false)} nodes={nodes} edges={edges} />
-
+                <ReactFlow
+                    nodes={nodes}
+                    edges={edges}
+                    onNodesChange={onNodesChange}
+                    onEdgesChange={onEdgesChange}
+                    onConnect={onConnect}
+                    onInit={setReactFlowInstance}
+                    onDrop={onDrop}
+                    onDragOver={onDragOver}
+                    fitView
+                >
+                    <Controls />
+                    <Background variant="dots" gap={12} size={1} />
+                </ReactFlow>
+                <SidePane isOpen={isPaneOpen} onClose={() => setIsPaneOpen(false)} nodes={nodes} edges={edges} />
+            </div>
         </div>
     );
 }
