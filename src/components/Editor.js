@@ -35,11 +35,8 @@ export default function Editor() {
 
     return (
         <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
-            <div style={{ width: '80px', backgroundColor: '#333', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <SideToolbar />
-            </div>
+            <SideToolbar />
             <div style={{ flex: 1 }}>
-
                 <TopTitlebar />
                 <MenuBar />
                 <SideMenuButton onClick={() => setIsPaneOpen(true)} />
@@ -57,6 +54,7 @@ export default function Editor() {
                 </ReactFlow>
                 <SidePane isOpen={isPaneOpen} onClose={() => setIsPaneOpen(false)} nodes={nodes} edges={edges} />
                 <NodesEdgesTable nodes={nodes} edges={edges} />
+
             </div>
         </div>
     );
