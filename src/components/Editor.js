@@ -1,4 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
+import SideMenuButton from './SideMenuButton';
+import SidePane from './SidePane';
+import NodesEdgesTable from './NodesEdgesTable';
 import ReactFlow, {
   MiniMap,
   Controls,
@@ -21,7 +24,8 @@ const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
 export default function Editor() {
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
- 
+    const [isPaneOpen, setIsPaneOpen] = useState(false);
+
     const onConnect = useCallback(
         (params) => setEdges((eds) => addEdge(params, eds)),
         [setEdges],
@@ -30,6 +34,8 @@ export default function Editor() {
     return (
         <div style={{ width: '100vw', height: '100vh' }}>
             <MenuBar />
+            <SideMenuButton onClick={() => setIsPaneOpen(true)} />
+
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -41,6 +47,9 @@ export default function Editor() {
             <MiniMap />
             <Background variant="dots" gap={12} size={1} />
         </ReactFlow>
+        <SidePane isOpen={isPaneOpen} onClose={() => setIsPaneOpen(false)} nodes={nodes} edges={edges} />
+         <NodesEdgesTable nodes={nodes} edges={edges} />
+
         </div>
     );
 }
