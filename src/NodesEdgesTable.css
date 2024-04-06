@@ -1,0 +1,46 @@
+/* General table styles for a clean and modern look */
+.table-nodes-edges {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 40px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .table-nodes-edges thead tr {
+    background-color: #000000;
+    color: #ffffff;
+    text-align: left;
+  }
+  
+  .table-nodes-edges th,
+  .table-nodes-edges td {
+    padding: 12px 15px;
+  }
+  
+  .table-nodes-edges tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  /* Hover effect for rows */
+  .table-nodes-edges tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  
+  .table-nodes-edges tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+  }
+  
+  .table-nodes-edges tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Column for edge/node labels */
+  .table-nodes-edges th:first-child,
+  .table-nodes-edges td:first-child {
+    color: #009879;
+    font-weight: bold;
+  }
+  
