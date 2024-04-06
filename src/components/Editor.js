@@ -3,6 +3,9 @@ import ReactFlow, { Controls, Background, useNodesState, useEdgesState, addEdge,
 import 'reactflow/dist/style.css';
 
 import MenuBar from './MenuBar';
+import SideMenuButton from './SideMenuButton';
+import SidePane from './SidePane';
+import NodesEdgesTable from './NodesEdgesTable';
 
 const DEFAULT_NODE_DIAMETER = 75;
 
@@ -34,6 +37,8 @@ export default function Editor() {
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
     // update edge array when connections happen
+    const [isPaneOpen, setIsPaneOpen] = useState(false);
+
     const onConnect = useCallback(
         (params) => setEdges((eds) => addEdge(params, eds)),
         [setEdges],
@@ -68,6 +73,7 @@ export default function Editor() {
     return (
         <div style={{ width: '100vw', height: '100vh' }}>
             <MenuBar />
+            <SideMenuButton onClick={() => setIsPaneOpen(true)} />
             
             <div
                 style={{
@@ -82,6 +88,7 @@ export default function Editor() {
                 {/* Node creation icon */}
                 <div style={{ width: '20px', height: '20px', backgroundColor: 'skyblue' }}></div>
             </div>
+
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -95,7 +102,10 @@ export default function Editor() {
             >
             <Controls />
             <Background variant="dots" gap={12} size={1} />
-            </ReactFlow>
+        </ReactFlow>
+        <SidePane isOpen={isPaneOpen} onClose={() => setIsPaneOpen(false)} nodes={nodes} edges={edges} />
+        <NodesEdgesTable nodes={nodes} edges={edges} />
+
         </div>
     );
 }
