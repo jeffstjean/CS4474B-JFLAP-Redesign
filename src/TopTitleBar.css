@@ -1,0 +1,23 @@
+.top-titlebar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #242424;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+.menu-item {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.project-title {
+    flex-grow: 1;
+    margin: 0 10px;
+}
+
+.saved-indicator,
+.collapse-icon {
+    margin-left: 10px;
+}
