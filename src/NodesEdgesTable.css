@@ -2,6 +2,7 @@
 .table-nodes-edges {
     width: 100%;
     border-collapse: separate; /* Change to 'separate' to handle individual cell borders */
+    table-layout: fixed;
     border-spacing: 0; /* Removes default spacing between borders */
     margin: 20px 0;
     font-size: 0.9em;
@@ -20,6 +21,11 @@
 .table-nodes-edges td {
     padding: 12px 15px;
     border-right: 1px solid #dddddd; /* Add right border to both th and td */
+    width: 25px; /* Fixed width for each cell */
+    height: 25px; /* Fixed height for each cell */
+    overflow: hidden; /* Ensures content does not overflow the cell dimensions */
+    text-overflow: ellipsis; /* Adds an ellipsis if the text overflows */
+    white-space: nowrap; /* Keeps the content on a single line */
 }
 
 /* Remove right border for the last th and td in each row */
