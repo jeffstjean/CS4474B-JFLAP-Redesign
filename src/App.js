@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainMenu from './components/MainManu'
 import Editor from './components/Editor'
+import SideToolbar from './components/SideToolBar';
+import TopTitleBar from './components/TopTitleBar';
 
 function App() {
   return (
