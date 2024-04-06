@@ -7,6 +7,7 @@ import TopTitlebar from './TopTitleBar';
 import SideMenuButton from './SideMenuButton';
 import SideToolbar from './SideToolBar';
 import SidePane from './SidePane';
+import TextEditor from './TextEditor'
 import { Constants } from '../Constants'
 
 import 'reactflow/dist/style.css';
@@ -43,23 +44,49 @@ const EDGE_DEFAULTS = {
     },
 }
 
-let id = 0;
-const getId = () => `q${id++}`;
+let nodeId = 0;
+const getNodeId = () => `q${nodeId++}`;
 
-const node1 = getId()
-const node2 = getId()
-
-const initialNodes = [
-    { id: node1, position: { x: -100, y: -30 }, data: { label: node1 }, ...NODE_DEFAULTS },
-    { id: node2, position: { x: 100, y: 30}, data: { label: node2 }, ...NODE_DEFAULTS },
+let initialNodes = [
+    { id: getNodeId(), position: { x: -100, y: -30 }, ...NODE_DEFAULTS },
+    { id: getNodeId(), position: { x: 100, y: 30}, ...NODE_DEFAULTS },
 ];
 
-const initialEdges = [{ id: 'e1-2', source: node1, target: node2, ...EDGE_DEFAULTS }];
+// initialNodes = initialNodes.map(n => n.data.label = n.id)
+initialNodes = initialNodes.map(n => ({ ...n, data: { label: n.id }}))
+
+let edgeId = 0;
+const getEdgeId = () => `e${edgeId++}`;
+
+const initialEdges = [{ id: getEdgeId(), source: initialNodes[0].id, target: initialNodes[1].id, ...EDGE_DEFAULTS }];
 
 export default function Editor() {
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
+
+    // track state of editing ID and text
+    const [editingNodeId, setEditingNodeId] = useState(null);
+    const [editingNodeText, setEditingNodeText] = useState('');
+
+    const onNodeDoubleClick = useCallback((event, node) => {
+        setEditingNodeId(node.id);
+        setEditingNodeText(node.data.label);
+    }, []);
+
+    const finishNodeEditing = useCallback(() => {
+        if (editingNodeId) {
+            const updatedNodes = nodes.map((node) => {
+                if (node.id === editingNodeId) {
+                    return { ...node, data: { ...node.data, label: editingNodeText } };
+                }
+                return node;
+            });
+            setNodes(updatedNodes);
+            setEditingNodeId(null);
+        }
+        setEditingNodeText('');
+    }, [editingNodeId, editingNodeText, nodes, setNodes]);
 
     // update edge array when connections happen
     const [isPaneOpen, setIsPaneOpen] = useState(false);
@@ -71,7 +98,7 @@ export default function Editor() {
 
     // on new edges, add to edge array
     const onConnect = useCallback((params) => {
-        setEdges((eds) => addEdge({ ...params, ...EDGE_DEFAULTS }, eds))
+        setEdges((eds) => addEdge({ id: getEdgeId(), ...params, ...EDGE_DEFAULTS }, eds))
     }, [setEdges]);
 
     // allow the 'move' drag effect on the create new node icon
@@ -90,7 +117,7 @@ export default function Editor() {
         e.preventDefault();
         const mousePosition = reactFlowInstance.screenToFlowPosition({ x: e.clientX, y: e.clientY });
         const position =  {x: mousePosition.x-Constants.node.DEFAULT_DIAMETER/2, y: mousePosition.y-Constants.node.DEFAULT_DIAMETER/2 }
-        const id = getId();
+        const id = getNodeId();
         const newNode = {
             id: id,
             type: 'default',
@@ -113,8 +140,17 @@ export default function Editor() {
                 <SideMenuButton onClick={() => setIsPaneOpen(true)} />
 
                 <ReactFlow
-                    nodes={nodes}
+                    nodes={nodes.map(node => ({
+                        ...node,
+                        data: {
+                            ...node.data,
+                            label: node.id === editingNodeId ? (
+                                <TextEditor text={editingNodeText} onChange={(e) => setEditingNodeText(e.target.value)} onComplete={finishNodeEditing} />
+                            ) : node.data.label
+                        }
+                    }))}
                     edges={edges}
+                    onNodeDoubleClick={onNodeDoubleClick}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                     onEdgeUpdate={onEdgeUpdate}
