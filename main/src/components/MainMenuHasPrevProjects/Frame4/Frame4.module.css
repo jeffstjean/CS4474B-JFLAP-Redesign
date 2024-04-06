@@ -1,0 +1,22 @@
+.root {
+  position: absolute;
+  left: 94px;
+  top: 102px;
+  width: 317px;
+  height: 242px;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+}
+.image3 {
+  position: absolute;
+  left: 3px;
+  top: 2px;
+  width: 314px;
+  height: 240px;
+  border-radius: 6px;
+  background-image:/* webpackIgnore: true */ url('/assets/image3.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

@@ -1,0 +1,34 @@
+.root {
+  position: absolute;
+  left: 7px;
+  top: 376px;
+  width: 350px;
+  height: 85px;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #7f8c8d;
+  overflow: hidden;
+}
+.report_FILL0_wght400_GRAD0_ops {
+  position: absolute;
+  left: 10.0303px;
+  top: 5.4765px;
+  width: 31.9147px;
+  height: 31.9463px;
+}
+.icon {
+  width: 100%;
+  height: 100%;
+}
+.stateMachineIsMissingAStarting {
+  color: #fff;
+  font-size: 18px;
+  font-family: Source Sans Pro, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    'Liberation Sans', sans-serif;
+  position: absolute;
+  left: 3.4402%;
+  right: 1.3791%;
+  top: 8.2481%;
+  bottom: 24.2519%;
+  flex-direction: column;
+}

@@ -1,0 +1,21 @@
+.header.header {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: initial;
+  height: initial;
+}
+.menu.menu {
+  height: initial;
+  justify-content: center;
+  align-items: center;
+}
+.root {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1440px;
+  height: 72px;
+  flex-direction: column;
+  align-items: flex-start;
+}

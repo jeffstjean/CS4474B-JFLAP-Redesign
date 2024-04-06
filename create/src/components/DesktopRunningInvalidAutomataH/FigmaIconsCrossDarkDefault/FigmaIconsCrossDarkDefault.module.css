@@ -1,0 +1,22 @@
+.root {
+  position: absolute;
+  left: 94.1667%;
+  right: 0.7639%;
+  top: 0.5859%;
+  bottom: 92.2852%;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 1px;
+  background-color: #fff0;
+}
+.svgNode {
+  position: absolute;
+  left: -6px;
+  top: -7px;
+  width: 73px;
+  height: 73px;
+}
+.icon {
+  width: 100%;
+  height: 100%;
+}
