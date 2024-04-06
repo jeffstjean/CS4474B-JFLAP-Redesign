@@ -1,12 +1,17 @@
-
-import './App.css';
-import React, { useCallback } from 'react';
-import MyComponent from './components/mainmenu'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainMenu from './components/MainManu'
+import Editor from './components/Editor'
+import SideToolbar from './components/SideToolBar';
+import TopTitleBar from './components/TopTitleBar';
 
 function App() {
-
   return (
-    <MyComponent />
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainMenu />} />
+        <Route path="/editor" element={<Editor />} />
+      </Routes>
+    </Router>
   );
 }
 

@@ -1,0 +1,45 @@
+.debugMenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff; /* Dark background */
+    padding: 10px;
+  }
+  
+  .debugButton {
+    display: inline-block;
+    margin: 10px 5px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px; /* Adjust as needed */
+    cursor: pointer;
+    border-radius: 50%; /* Circular buttons */
+    width: 50px; /* Fixed width and height for circle */
+    height: 47.5px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  
+  /* Adjust the colors as needed to match the image provided */
+  .debugButton.play {
+    background-color: #2ecc71;
+  }
+  
+  .debugButton.pause {
+    background-color: #e74c3c;
+  }
+  
+  .debugButton.up {
+    background-color: #3498db;
+  }
+  
+  .debugButton.left {
+    background-color: #3498db;
+  }
+  
+  .debugButton.right {
+    background-color: #3498db;
+  }
+  
