@@ -8,6 +8,8 @@ export const Constants = {
         TEXT_COLOR: '#FFFFFF',
         STROKE_COLOR: '#000000',
         STROKE_WIDTH: 1,
+        HOVERED_STROKE_COLOR: 'red',
+        HOVERED_STROKE_WIDTH: 2,
         DEFAULT_DIAMETER: 75,
     },
 

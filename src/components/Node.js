@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Handle, Position } from 'reactflow';
 import { Constants } from '../Constants'
 
-export default function Node(props) {
+export default function Node({ data }) {
     const [isHovered, setIsHovered] = useState(false);
-    const label = props.data.label ?? ''
+    const label = data.label ?? ''
 
     const nodeStyle = {
         position: 'relative',
@@ -12,8 +12,9 @@ export default function Node(props) {
         backgroundColor: Constants.node.BACKGROUND_COLOR,
         width: Constants.node.DEFAULT_DIAMETER,
         height: Constants.node.DEFAULT_DIAMETER,
-        borderWidth: Constants.node.STROKE_WIDTH,
-        borderColor: Constants.node.STROKE_COLOR,
+        outlineWidth: isHovered || data.shouldHover ? Constants.node.HOVERED_STROKE_COLOR : Constants.node.STROKE_WIDTH,
+        outlineColor: isHovered || data.shouldHover ? Constants.node.HOVERED_STROKE_COLOR : Constants.node.STROKE_COLOR,
+        outlineStyle: 'solid',
         borderRadius: '100%',
         display: 'flex',
         alignItems: 'center',
