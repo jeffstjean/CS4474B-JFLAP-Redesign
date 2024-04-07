@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { render } from "react-dom";
 import './../SideToolBar.css'
 
+/*
 import {
     CommentSVGIcon,
     UndoSVGIcon,
@@ -9,8 +10,7 @@ import {
     RadioButtonUncheckedSVGIcon, // the sprite name for this was 3d_rotation.svg
     CreateSVGIcon,
 } from "@react-md/material-icons";
-
-
+*/
 const SideToolbar = ({ onDragStart }) => {
     const [zoomLevel, setZoomLevel] = useState(1); // Initial zoom level
     const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 }); // Initial canvas position
