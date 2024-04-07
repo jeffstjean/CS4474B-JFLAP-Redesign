@@ -36,6 +36,8 @@ const EDGE_DEFAULTS = {
 let nodeId = 0;
 const getNodeId = () => `q${nodeId++}`;
 
+
+
 let initialNodes = [
     { id: getNodeId(), position: { x: -200, y: 30 }, ...NODE_DEFAULTS },
     { id: getNodeId(), position: { x: 200, y: 30}, ...NODE_DEFAULTS },
@@ -61,6 +63,7 @@ export default function Editor() {
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
+    const [hoveredNodeId, setHoveredNodeId] = useState(null);
 
     // track state of editing ID and text
     const [editingNodeId, setEditingNodeId] = useState(null);
@@ -118,22 +121,22 @@ export default function Editor() {
     const onDragOver = useCallback((e) => {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move';
-      }, []);
+    }, []);
 
     // when dropped, create a new code at the mouse location
     const onDrop = useCallback(e => {
         e.preventDefault();
         const mousePosition = reactFlowInstance.screenToFlowPosition({ x: e.clientX, y: e.clientY });
-        const position =  {x: mousePosition.x-Constants.node.DEFAULT_DIAMETER/2, y: mousePosition.y-Constants.node.DEFAULT_DIAMETER/2 }
+        const position = { x: mousePosition.x - Constants.node.DEFAULT_DIAMETER / 2, y: mousePosition.y - Constants.node.DEFAULT_DIAMETER / 2 }
         const id = getNodeId();
         const newNode = {
             id: id,
             type: 'default',
             position,
-            data: { label: id }, 
+            data: { label: id },
             ...NODE_DEFAULTS
-          };
-          setNodes((nds) => nds.concat(newNode));
+        };
+        setNodes((nds) => nds.concat(newNode));
     }, [setNodes, reactFlowInstance])
 
     const nodeTypes = useMemo(() => ({ custom: Node }), []);
@@ -142,10 +145,9 @@ export default function Editor() {
     return (
         <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
             <div style={{ width: '80px', backgroundColor: '#333', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <SideToolbar onDragStart={onDragStart} />
+                <SideToolbar onDragStart={onDragStart} setIsPane={setIsPaneOpen} />
             </div>
             <div style={{ flex: 1 }}>
-
                 <TopTitlebar />
                 <MenuBar />
                 <SideMenuButton onClick={() => setIsPaneOpen(true)} />
@@ -155,6 +157,7 @@ export default function Editor() {
                         ...node,
                         data: {
                             ...node.data,
+                            shouldHover: node.id === hoveredNodeId,
                             label: node.id === editingNodeId ? (
                                 <TextEditor text={editingNodeText || ''} onChange={(e) => setEditingNodeText(e.target.value)} onComplete={finishNodeEditing} />
                             ) : node.data.label
@@ -179,6 +182,8 @@ export default function Editor() {
                     onInit={setReactFlowInstance}
                     onDrop={onDrop}
                     onDragOver={onDragOver}
+                    onNodeMouseEnter={(_, node) => setHoveredNodeId(node.id)}
+                    onNodeMouseLeave={() => setHoveredNodeId(null)}
                     fitView
                     nodeTypes={nodeTypes}
                     edgeTypes={edgeTypes}
@@ -187,7 +192,7 @@ export default function Editor() {
                     <Controls />
                     <Background variant={Constants.editor.DEFAULT_BACKGROUND_TYPE} gap={12} size={1} />
                 </ReactFlow>
-                <SidePane isOpen={isPaneOpen} onClose={() => setIsPaneOpen(false)} nodes={nodes} edges={edges} />
+                <SidePane isOpen={isPaneOpen} onClose={() => setIsPaneOpen(false)} nodes={nodes} edges={edges} setHoveredNodeId={setHoveredNodeId} hoveredNodeId={hoveredNodeId} />
             </div>
         </div>
     );

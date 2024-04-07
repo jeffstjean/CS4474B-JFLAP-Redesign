@@ -19,71 +19,73 @@ const projects = [
   },
 ];
 
-const TopBar = () => {
-  const [activeMenu, setActiveMenu] = React.useState(null);
-
-  const handleMenuClick = (menuName) => {
-    setActiveMenu(activeMenu === menuName ? null : menuName);
+const menuOptions = {
+    file: ['New File', 'Open File', 'Save File'],
+    edit: ['Undo', 'Redo', 'Cut', 'Copy', 'Paste'],
+    view: ['Zoom In', 'Zoom Out', 'Full Screen'],
+    tools: ['Spell Check', 'Word Count'],
+    help: ['Documentation', 'Support'],
   };
 
-  const renderDropdownMenu = (menuName) => (
-    <div className={`dropdown-menu ${activeMenu === menuName ? "active" : ""}`}>
-      <div className="dropdown-item">Option 1</div>
-      <div className="dropdown-item">Option 2</div>
-      <div className="dropdown-item">Option 3</div>
-    </div>
-  );
+  
+const TopBar = () => {
+const [activeMenu, setActiveMenu] = React.useState(null);
 
-  return (
+const handleMenuClick = (menuName) => {
+    setActiveMenu(activeMenu === menuName ? null : menuName);
+};
+
+// Added a function to clear the active menu when the mouse leaves the dropdown area
+const handleMouseLeave = () => {
+    setActiveMenu(null);
+};
+
+// Updated to render specific menu options
+const renderDropdownMenu = (menuName) => (
+    <div className={`dropdown-menu ${activeMenu === menuName ? "active" : ""}`} onMouseLeave={handleMouseLeave}>
+    {menuOptions[menuName].map((option, index) => (
+        <div key={index} className="dropdown-item">
+        {option}
+        </div>
+    ))}
+    </div>
+);
+
+return (
     <header className="top-bar">
-      <nav className="tool-bar">
-        <div className="tool-bar-item" onClick={() => handleMenuClick("file")}>
-          File
-          {renderDropdownMenu("file")}
+    <nav className="tool-bar">
+        {Object.keys(menuOptions).map((menuName) => (
+        <div key={menuName} className="tool-bar-item" onClick={() => handleMenuClick(menuName)}>
+            {menuName.charAt(0).toUpperCase() + menuName.slice(1)}
+            {renderDropdownMenu(menuName)}
         </div>
-        <div className="tool-bar-item" onClick={() => handleMenuClick("edit")}>
-          Edit
-          {renderDropdownMenu("edit")}
-        </div>
-        <div className="tool-bar-item" onClick={() => handleMenuClick("view")}>
-          View
-          {renderDropdownMenu("view")}
-        </div>
-        <div className="tool-bar-item" onClick={() => handleMenuClick("tools")}>
-          Tools
-          {renderDropdownMenu("tools")}
-        </div>
-        <div className="tool-bar-item" onClick={() => handleMenuClick("help")}>
-          Help
-          {renderDropdownMenu("help")}
-        </div>
-      </nav>
-      <h1 className="title">JFLAP: The Better Version</h1>
-      <div className="tool-bar-spacer"></div> {/* This is the invisible spacer */}
+        ))}
+    </nav>
+    <h1 className="title">JFLAP: The Better Version</h1>
     </header>
-  );
+);
 };
 
 const ProjectTypes = () => {
-    let navigate = useNavigate();
-  
-    const handleProjectClick = () => {
-      navigate('/editor'); // This will change the route to /editor
-    };
-  
-    return (
-      <div className="project-types">
-        <div className="project-grid">
-          {projects.map((project) => (
-            <div key={project.id} className="project-column" onClick={handleProjectClick}>
-              <img src={project.image} alt={project.alt} className="project-image" />
-              {/* Add the title and description here if needed */}
-            </div>
-          ))}
+let navigate = useNavigate();
+
+const handleProjectClick = () => {
+    navigate('/editor'); // This will change the route to /editor
+};
+
+return (
+    <div className="project-types">
+    <div className="project-grid">
+        {projects.map((project) => (
+        <div key={project.id} className="project-column" onClick={handleProjectClick}>
+            <img src={project.image} alt={project.alt} className="project-image" />
+            {/* Add the title and description here if needed */}
         </div>
-      </div>
-    );
-  };
+        ))}
+    </div>
+    </div>
+);
+};
 
 const NewProjects = () => (
   <section className="new-projects">
@@ -96,12 +98,72 @@ const NewProjects = () => (
   </section>
 );
 
-const YourProjects = () => (
-  <section className="your-projects">
-    <h2 className="your-projects-title">Your Projects</h2>
-    <p className="no-projects">No projects yet</p>
-  </section>
-);
+// const YourProjects = () => (
+//   <section className="your-projects">
+//     <h2 className="your-projects-title">Your Projects</h2>
+//     <p className="no-projects">No projects yet</p>
+//   </section>
+// );
+
+const YourProjects = () => {
+    const navigate = useNavigate();
+    const userProjects = []; // Replace this with your actual state or prop holding the projects
+  
+    const handlePlaceholderClick = () => {
+      navigate('/editor');
+    };
+  
+    return (
+      <section className="your-projects">
+        <h2 className="your-projects-title">Your Projects</h2>
+        {userProjects.length === 0 ? (
+          <div className="placeholder-container" onClick={handlePlaceholderClick}>
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/0575a09ece5e5994207b61d3687d39f8f5407b41470167dfa668ec394d1d396f?apiKey=f85ade9d92be4e92bf330987900cae47&width=300"
+              alt="No Projects"
+              className="img"
+            />
+            <style jsx>{`
+              .placeholder-container {
+                display: flex;
+                align-items: center; /* Align vertically */
+                justify-content: flex-start; /* Align horizontally to the left */
+                cursor: pointer; /* Change mouse cursor on hover */
+              }
+              .img {
+                width: 300px; /* Fixed width */
+                height: auto; /* Height is adjusted to maintain the aspect ratio */
+                object-fit: cover;
+                object-position: center;
+                margin-right: 0px; /* Add some space to the right of the image */
+                margin-left: -590px;
+                margin-top: 10px;
+                transition: box-shadow 0.3s ease; /* Smooth transition for the shadow */
+              }
+              .img:hover {
+                box-shadow: 0 0 0 2px #ea9c14; /* Orange outline on hover */
+              }
+              .your-projects {
+                display: flex; /* Use flexbox for alignment */
+                align-items: center; /* Align vertically */
+                justify-content: flex-start; /* Align horizontally to the left */
+              }
+              .your-projects-title {
+                /* Ensure that the title takes up minimal space if not needed */
+                white-space: nowrap;
+                margin-right: 10px; /* Add space between the title and the image */
+              }
+            `}</style>
+          </div>
+        ) : (
+          // Render user's projects here when there are some
+          <></>
+        )}
+      </section>
+    );
+  };
+  
 
 function MainMenu() {
   return (
@@ -147,12 +209,11 @@ function MainMenu() {
         }
 
         .tool-bar-item {
-          font-family: Source Sans Pro, -apple-system, Roboto, Helvetica,
-            sans-serif;
-          position: relative;
-          padding: 15px 10px;
-          cursor: pointer;
-          transition: background-color 0.3s ease; // Smooth transition for background color
+            font-family: Source Sans Pro, -apple-system, Roboto, Helvetica, sans-serif;
+            position: relative; /* Necessary for absolute positioning of dropdowns */
+            padding: 15px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
       
         .tool-bar-item:hover {
@@ -160,13 +221,17 @@ function MainMenu() {
         }
 
         .dropdown-menu {
-          display: none;
-          position: absolute;
-          background-color: #2c2c2c;
-          padding: 10px;
-          border-radius: 4px;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-          z-index: 1;
+            display: none; /* Hide by default, shown on activeMenu state match */
+            position: absolute;
+            background-color: #2c2c2c;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            top: 100%; /* Align just below the toolbar item */
+            left: 0;
+            box-sizing: border-box;
+            box-shadow: 0 0 5px 0 rgba(101, 101, 101, 0.5);
         }
 
         .dropdown-menu.active {
@@ -177,6 +242,16 @@ function MainMenu() {
           color: #fff;
           padding: 5px 0;
           cursor: pointer;
+          white-space: nowrap; /* Prevents text from wrapping */
+          border-bottom: 1px solid #474747;
+        }
+        .dropdown-item:hover {
+            background-color: #1d1d1d; /* Highlight on hover */
+          }
+        
+          /* Remove the border from the last item */
+        .dropdown-item:last-child {
+        border-bottom: none;
         }
 
         .title {

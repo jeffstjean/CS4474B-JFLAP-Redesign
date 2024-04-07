@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { render } from "react-dom";
 import './../SideToolBar.css'
 
 
-const SideToolbar = ({ onDragStart }) => {
+const SideToolbar = ({ onDragStart, setIsPane }) => {
     const [zoomLevel, setZoomLevel] = useState(1); // Initial zoom level
     const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 }); // Initial canvas position
     const [undoHistory, setUndoHistory] = useState([]); // Array to store undo history
@@ -112,18 +113,34 @@ const SideToolbar = ({ onDragStart }) => {
         setDraggingState(null);
     };
 
+    const handleDraw = (event) => {
+
+    };
+
+    const handleComment = (event) => {
+
+    };
+
     return (
-        <div className="toolbar" onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
-            <button className="toolbar-btn" onClick={handleUndo} title="Undo">&#9664;</button>
-            <button className="toolbar-btn" onClick={handleRedo} title="Redo">&#9654;</button>
-            <button className="toolbar-btn" onClick={handleZoomIn} title="Zoom In">&#128279;</button>
-            <button className="toolbar-btn" onClick={() => handlePan('left')} title="Pan Left">&#8617;</button>
-            <button className="toolbar-btn" onClick={() => handlePan('right')} title="Pan Right">&#8630;</button>
-            <button className="toolbar-btn" onClick={() => handlePan('up')} title="Pan Up">&#8629;</button>
-            <button className="toolbar-btn" onClick={() => handlePan('down')} title="Pan Down">&#8627;</button>
-            <button className="toolbar-btn" onClick={handleFitToView} title="Zoom to Fit">&#8660;</button>
-            <button className="toolbar-btn" onClick={handleZoomTo100} title="Zoom to 100%">&#8613;</button>
-            <button className="toolbar-btn" onClick={handleAddState} title="Add State" onDragStart={onDragStart} draggable >⬤</button>
+        <div className="sidetoolbar">
+            <button className="toolbar-btn" onClick={handleAddState} title="Add State" onDragStart={onDragStart} draggable>
+                <span className="material-icons">radio_button_unchecked</span>
+            </button>
+            <button className="toolbar-btn" onClick={() => handleDraw()} title="Draw">
+                <span className="material-icons">draw</span>
+            </button>
+            <button className="toolbar-btn" onClick={() => handleComment()} title="Comment">
+                <span className="material-icons">comment</span>
+            </button>
+            <button className="toolbar-btn" onClick={handleUndo} title="Undo">
+                <span className="material-icons">undo</span>
+            </button>
+            <button className="toolbar-btn" onClick={handleRedo} title="Redo">
+                <span className="material-icons">redo</span>
+            </button>
+            <button className="toolbar-btn" onClick={() => setIsPane(true)} title="Open Side Pane">
+                <span className="material-icons">double_arrow</span>
+            </button>
         </div>
     );
 };
