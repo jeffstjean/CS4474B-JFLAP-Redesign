@@ -134,7 +134,7 @@ export default function Editor() {
     return (
         <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
             <div style={{ width: '80px', backgroundColor: '#333', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <SideToolbar onDragStart={onDragStart} />
+                <SideToolbar onDragStart={onDragStart} setIsPane={setIsPaneOpen} />
             </div>
             <div style={{ flex: 1 }}>
                 <TopTitlebar />
@@ -156,7 +156,7 @@ export default function Editor() {
                             ) : node.data.label
                         }
                     }))}
-                    
+
                     edges={edges}
                     onNodeDoubleClick={onNodeDoubleClick}
                     onNodesChange={onNodesChange}

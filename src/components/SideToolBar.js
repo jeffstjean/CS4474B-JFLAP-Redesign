@@ -2,16 +2,8 @@ import React, { useState } from 'react';
 import { render } from "react-dom";
 import './../SideToolBar.css'
 
-import {
-    CommentSVGIcon,
-    UndoSVGIcon,
-    RedoSVGIcon, // the sprite name for this was 3d_rotation.svg
-    RadioButtonUncheckedSVGIcon, // the sprite name for this was 3d_rotation.svg
-    CreateSVGIcon,
-} from "@react-md/material-icons";
 
-
-const SideToolbar = ({ onDragStart }) => {
+const SideToolbar = ({ onDragStart, setIsPane }) => {
     const [zoomLevel, setZoomLevel] = useState(1); // Initial zoom level
     const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 }); // Initial canvas position
     const [undoHistory, setUndoHistory] = useState([]); // Array to store undo history
@@ -145,6 +137,9 @@ const SideToolbar = ({ onDragStart }) => {
             </button>
             <button className="toolbar-btn" onClick={handleRedo} title="Redo">
                 <span className="material-icons">redo</span>
+            </button>
+            <button className="toolbar-btn" onClick={() => setIsPane(true)} title="Open Side Pane">
+                <span className="material-icons">double_arrow</span>
             </button>
         </div>
     );
