@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import ReactFlow, { Controls, Background, useNodesState, useEdgesState, updateEdge, addEdge, Position, MarkerType } from 'reactflow';
+import React, { useCallback, useState, useMemo } from 'react';
+import ReactFlow, { Controls, Background, useNodesState, useEdgesState, updateEdge, addEdge, MarkerType } from 'reactflow';
 import 'reactflow/dist/style.css';
 
 import MenuBar from './MenuBar';
@@ -8,29 +8,18 @@ import SideMenuButton from './SideMenuButton';
 import SideToolbar from './SideToolBar';
 import SidePane from './SidePane';
 import TextEditor from './TextEditor'
+import Node from './Node'
+import Edge from './Edge';
 import { Constants } from '../Constants'
 
 import 'reactflow/dist/style.css';
 
 const NODE_DEFAULTS = {
-    sourcePosition: Position.Right,
-    targetPosition: Position.Left,
-    style: {
-        borderRadius: '100%',
-        color: Constants.node.TEXT_COLOR,
-        backgroundColor: Constants.node.BACKGROUND_COLOR,
-        borderColor: Constants.node.STROKE_COLOR,
-        borderWidth: Constants.node.STROKE_WIDTH,
-        width: Constants.node.DEFAULT_DIAMETER,
-        height: Constants.node.DEFAULT_DIAMETER,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+    type: 'custom',
 };
 
 const EDGE_DEFAULTS = {
-    type: Constants.EDGE_TYPE,
+    type: 'custom',
     updatable: true,
     markerEnd: {
         type: MarkerType.ArrowClosed,
@@ -50,17 +39,25 @@ const getNodeId = () => `q${nodeId++}`;
 
 
 let initialNodes = [
-    { id: getNodeId(), position: { x: -100, y: -30 }, ...NODE_DEFAULTS },
-    { id: getNodeId(), position: { x: 100, y: 30 }, ...NODE_DEFAULTS },
+    { id: getNodeId(), position: { x: -200, y: 30 }, ...NODE_DEFAULTS },
+    { id: getNodeId(), position: { x: 200, y: 30}, ...NODE_DEFAULTS },
+    { id: getNodeId(), position: { x: -225, y: 400}, ...NODE_DEFAULTS },
+    { id: getNodeId(), position: { x: 150, y: 300}, ...NODE_DEFAULTS },
 ];
 
-// initialNodes = initialNodes.map(n => n.data.label = n.id)
-initialNodes = initialNodes.map(n => ({ ...n, data: { label: n.id } }))
+initialNodes = initialNodes.map(n => ({ ...n, data: { ...n.data, label: n.id }}))
 
 let edgeId = 0;
 const getEdgeId = () => `e${edgeId++}`;
 
-const initialEdges = [{ id: getEdgeId(), source: initialNodes[0].id, target: initialNodes[1].id, ...EDGE_DEFAULTS }];
+const initialEdges = [
+    { id: getEdgeId(), source: 'q0', target: 'q1', label: 'a', ...EDGE_DEFAULTS },
+    { id: getEdgeId(), source: 'q2', target: 'q0', label: 'b', ...EDGE_DEFAULTS },
+    { id: getEdgeId(), source: 'q0', target: 'q2', label: 'c', ...EDGE_DEFAULTS },
+    { id: getEdgeId(), source: 'q2', target: 'q3', label: 'd', ...EDGE_DEFAULTS },
+    { id: getEdgeId(), source: 'q0', target: 'q3', label: 'e', ...EDGE_DEFAULTS },
+    { id: getEdgeId(), source: 'q3', target: 'q1', label: 'f', ...EDGE_DEFAULTS },
+];
 
 export default function Editor() {
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -91,6 +88,17 @@ export default function Editor() {
         setEditingNodeText('');
     }, [editingNodeId, editingNodeText, nodes, setNodes]);
 
+    const [editingEdgeId, setEditingEdgeId] = useState(null);
+
+    const onLabelChange = useCallback((edgeId, newLabel) => {
+        setEdges((els) => els.map((edge) => edge.id === edgeId ? { ...edge, label: newLabel } : edge));
+    }, [setEdges]);
+
+    const finishLabelEditing = useCallback((edgeId) => {
+        setEditingEdgeId(null);
+        // Optionally update the backend here if needed
+    }, [setEditingEdgeId]);
+
     // update edge array when connections happen
     const [isPaneOpen, setIsPaneOpen] = useState(false);
 
@@ -101,7 +109,7 @@ export default function Editor() {
 
     // on new edges, add to edge array
     const onConnect = useCallback((params) => {
-        setEdges((eds) => addEdge({ id: getEdgeId(), ...params, ...EDGE_DEFAULTS }, eds))
+        setEdges((eds) => addEdge({ id: getEdgeId(), ...params, label: '---', ...EDGE_DEFAULTS }, eds))
     }, [setEdges]);
 
     // allow the 'move' drag effect on the create new node icon
@@ -131,6 +139,9 @@ export default function Editor() {
         setNodes((nds) => nds.concat(newNode));
     }, [setNodes, reactFlowInstance])
 
+    const nodeTypes = useMemo(() => ({ custom: Node }), []);
+    const edgeTypes = useMemo(() => ({ custom: Edge }), []);
+
     return (
         <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
             <div style={{ width: '80px', backgroundColor: '#333', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -144,20 +155,25 @@ export default function Editor() {
                 <ReactFlow
                     nodes={nodes.map(node => ({
                         ...node,
-                        style: {
-                            ...node.style,
-                            borderColor: node.id === hoveredNodeId ? 'red' : node.style.borderColor, // Highlight border color change as an example
-                            borderWidth: node.id === hoveredNodeId ? 2 : NODE_DEFAULTS.style.borderWidth,
-                        },
                         data: {
                             ...node.data,
+                            shouldHover: node.id === hoveredNodeId,
                             label: node.id === editingNodeId ? (
-                                <TextEditor text={editingNodeText} onChange={(e) => setEditingNodeText(e.target.value)} onComplete={finishNodeEditing} />
+                                <TextEditor text={editingNodeText || ''} onChange={(e) => setEditingNodeText(e.target.value)} onComplete={finishNodeEditing} />
                             ) : node.data.label
                         }
                     }))}
-
-                    edges={edges}
+                    edges={edges.map(edge => ({
+                        ...edge,
+                        data: {
+                            ...edge.data,
+                            label: edge.label,
+                            onLabelDoubleClick: () => setEditingEdgeId(edge.id),
+                            onLabelChange: onLabelChange,
+                            finishLabelEditing: finishLabelEditing,
+                            isEditing: editingEdgeId === edge.id,
+                        }
+                    }))}
                     onNodeDoubleClick={onNodeDoubleClick}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
@@ -169,9 +185,12 @@ export default function Editor() {
                     onNodeMouseEnter={(_, node) => setHoveredNodeId(node.id)}
                     onNodeMouseLeave={() => setHoveredNodeId(null)}
                     fitView
+                    nodeTypes={nodeTypes}
+                    edgeTypes={edgeTypes}
+                    connectionMode="loose"
                 >
                     <Controls />
-                    <Background variant="dots" gap={12} size={1} />
+                    <Background variant={Constants.editor.DEFAULT_BACKGROUND_TYPE} gap={12} size={1} />
                 </ReactFlow>
                 <SidePane isOpen={isPaneOpen} onClose={() => setIsPaneOpen(false)} nodes={nodes} edges={edges} setHoveredNodeId={setHoveredNodeId} hoveredNodeId={hoveredNodeId} />
             </div>
