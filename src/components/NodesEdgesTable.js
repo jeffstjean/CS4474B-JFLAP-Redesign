@@ -1,7 +1,7 @@
 import React from 'react';
 import './../NodesEdgesTable.css';
 
-function NodesEdgesTable({ nodes, edges }) {
+function NodesEdgesTable({ nodes, edges , hoveredNodeId, setHoveredNodeId}) {
   // Extract edge IDs for table headings
   const edgeHeadings = edges.map((edge) => (
     <th key={edge.id}>{edge.id}</th>
@@ -10,7 +10,15 @@ function NodesEdgesTable({ nodes, edges }) {
   // Map nodes to table rows, including a cell for each edge
   const nodeRows = nodes.map((node) => (
     <tr key={node.id}>
-      <td>{node.data.label}</td>
+      <td
+  key={node.id}
+  className={node.id === hoveredNodeId ? 'highlighted' : ''}
+
+  onMouseEnter={() => setHoveredNodeId(node.id)}
+  onMouseLeave={() => setHoveredNodeId(null)}
+>
+  {node.data.label}
+</td>
       {edges.map((edge) => {
         // Determine if the current node is either the source or target of the edge
         // This part might need adjustment based on how your edge data is structured
