@@ -16,16 +16,16 @@ const NODE_DEFAULTS = {
     sourcePosition: Position.Right,
     targetPosition: Position.Left,
     style: {
-      borderRadius: '100%',
-      color: Constants.node.TEXT_COLOR,
-      backgroundColor: Constants.node.BACKGROUND_COLOR,
-      borderColor: Constants.node.STROKE_COLOR,
-      borderWidth: Constants.node.STROKE_WIDTH,
-      width: Constants.node.DEFAULT_DIAMETER,
-      height: Constants.node.DEFAULT_DIAMETER,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+        borderRadius: '100%',
+        color: Constants.node.TEXT_COLOR,
+        backgroundColor: Constants.node.BACKGROUND_COLOR,
+        borderColor: Constants.node.STROKE_COLOR,
+        borderWidth: Constants.node.STROKE_WIDTH,
+        width: Constants.node.DEFAULT_DIAMETER,
+        height: Constants.node.DEFAULT_DIAMETER,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 };
 
@@ -51,11 +51,11 @@ const getNodeId = () => `q${nodeId++}`;
 
 let initialNodes = [
     { id: getNodeId(), position: { x: -100, y: -30 }, ...NODE_DEFAULTS },
-    { id: getNodeId(), position: { x: 100, y: 30}, ...NODE_DEFAULTS },
+    { id: getNodeId(), position: { x: 100, y: 30 }, ...NODE_DEFAULTS },
 ];
 
 // initialNodes = initialNodes.map(n => n.data.label = n.id)
-initialNodes = initialNodes.map(n => ({ ...n, data: { label: n.id }}))
+initialNodes = initialNodes.map(n => ({ ...n, data: { label: n.id } }))
 
 let edgeId = 0;
 const getEdgeId = () => `e${edgeId++}`;
@@ -113,22 +113,22 @@ export default function Editor() {
     const onDragOver = useCallback((e) => {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move';
-      }, []);
+    }, []);
 
     // when dropped, create a new code at the mouse location
     const onDrop = useCallback(e => {
         e.preventDefault();
         const mousePosition = reactFlowInstance.screenToFlowPosition({ x: e.clientX, y: e.clientY });
-        const position =  {x: mousePosition.x-Constants.node.DEFAULT_DIAMETER/2, y: mousePosition.y-Constants.node.DEFAULT_DIAMETER/2 }
+        const position = { x: mousePosition.x - Constants.node.DEFAULT_DIAMETER / 2, y: mousePosition.y - Constants.node.DEFAULT_DIAMETER / 2 }
         const id = getNodeId();
         const newNode = {
             id: id,
             type: 'default',
             position,
-            data: { label: id }, 
+            data: { label: id },
             ...NODE_DEFAULTS
-          };
-          setNodes((nds) => nds.concat(newNode));
+        };
+        setNodes((nds) => nds.concat(newNode));
     }, [setNodes, reactFlowInstance])
 
     return (
@@ -137,7 +137,6 @@ export default function Editor() {
                 <SideToolbar onDragStart={onDragStart} />
             </div>
             <div style={{ flex: 1 }}>
-
                 <TopTitlebar />
                 <MenuBar />
                 <SideMenuButton onClick={() => setIsPaneOpen(true)} />
