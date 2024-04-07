@@ -47,6 +47,8 @@ const EDGE_DEFAULTS = {
 let nodeId = 0;
 const getNodeId = () => `q${nodeId++}`;
 
+
+
 let initialNodes = [
     { id: getNodeId(), position: { x: -100, y: -30 }, ...NODE_DEFAULTS },
     { id: getNodeId(), position: { x: 100, y: 30 }, ...NODE_DEFAULTS },
@@ -64,6 +66,7 @@ export default function Editor() {
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
+    const [hoveredNodeId, setHoveredNodeId] = useState(null);
 
     // track state of editing ID and text
     const [editingNodeId, setEditingNodeId] = useState(null);
@@ -141,6 +144,11 @@ export default function Editor() {
                 <ReactFlow
                     nodes={nodes.map(node => ({
                         ...node,
+                        style: {
+                            ...node.style,
+                            borderColor: node.id === hoveredNodeId ? 'red' : node.style.borderColor, // Highlight border color change as an example
+                            borderWidth: node.id === hoveredNodeId ? 2 : NODE_DEFAULTS.style.borderWidth,
+                        },
                         data: {
                             ...node.data,
                             label: node.id === editingNodeId ? (
@@ -148,6 +156,7 @@ export default function Editor() {
                             ) : node.data.label
                         }
                     }))}
+                    
                     edges={edges}
                     onNodeDoubleClick={onNodeDoubleClick}
                     onNodesChange={onNodesChange}
@@ -157,12 +166,14 @@ export default function Editor() {
                     onInit={setReactFlowInstance}
                     onDrop={onDrop}
                     onDragOver={onDragOver}
+                    onNodeMouseEnter={(_, node) => setHoveredNodeId(node.id)}
+                    onNodeMouseLeave={() => setHoveredNodeId(null)}
                     fitView
                 >
                     <Controls />
                     <Background variant="dots" gap={12} size={1} />
                 </ReactFlow>
-                <SidePane isOpen={isPaneOpen} onClose={() => setIsPaneOpen(false)} nodes={nodes} edges={edges} />
+                <SidePane isOpen={isPaneOpen} onClose={() => setIsPaneOpen(false)} nodes={nodes} edges={edges} setHoveredNodeId={setHoveredNodeId} hoveredNodeId={hoveredNodeId} />
             </div>
         </div>
     );
