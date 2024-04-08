@@ -158,7 +158,8 @@ export default function Edge ({ id, source, target, markerEnd, style, selected, 
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        padding: 0
+        padding: 0,
+        color: Constants.edge.LABEL_COLOR,
     }
 
     const edgeStyle = {

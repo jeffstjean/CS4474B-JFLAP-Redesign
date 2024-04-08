@@ -17,6 +17,7 @@ export const Constants = {
         TYPE: 'straight',
         STROKE_COLOR: '#e8dec8',
         STROKE_WIDTH: 1,
+        LABEL_COLOR: '#e8dec8',
         SELECTED_STROKE_COLOR: '#777777',
         ARROW_SIZE: 25,
     },
