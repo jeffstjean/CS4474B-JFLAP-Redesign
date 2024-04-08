@@ -2,9 +2,7 @@ import React, { useCallback, useState, useMemo } from 'react';
 import ReactFlow, { Controls, Background, useNodesState, useEdgesState, updateEdge, addEdge, MarkerType } from 'reactflow';
 import 'reactflow/dist/style.css';
 
-import MenuBar from './MenuBar';
 import TopTitlebar from './TopTitleBar';
-import SideMenuButton from './SideMenuButton';
 import SideToolbar from './SideToolBar';
 import SidePane from './SidePane';
 import TextEditor from './TextEditor'
@@ -155,8 +153,6 @@ export default function Editor() {
             </div>
             <div style={{ flex: 1 }}>
                 <TopTitlebar />
-                <MenuBar />
-                <SideMenuButton onClick={() => setIsPaneOpen(true)} />
 
                 <ReactFlow
                     nodes={nodes.map(node => ({
