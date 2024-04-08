@@ -48,3 +48,10 @@
 .white-icon {
     fill: white;
 }
+
+.toolbar-btn.sidepane-toggle {
+    position: fixed; /* Fixed position relative to the viewport */
+    top: 55px; /* Adjust this value as needed to position from the top */
+    right: 1px; /* Adjust this value as needed to position from the right */
+    z-index: 5; /* Ensures it stays above other elements */
+}
