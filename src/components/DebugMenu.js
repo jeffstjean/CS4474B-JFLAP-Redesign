@@ -30,19 +30,19 @@ const DebugMenu = ({isError}) => {
 
   return (
     <div className={`debugMenu ${isError ? 'disabled' : ''}`}>
-      <button onClick={handlePlay} className="debugButton play">
+      <button title= "Run Simulation" onClick={handlePlay} className="debugButton play">
         <span className="material-icons">play_arrow</span>
       </button>
-      <button onClick={handlePause} className="debugButton pause">
+      <button title="Pause Simulation"onClick={handlePause} className="debugButton pause">
         <span className="material-icons">pause</span>
       </button>
-      <button onClick={handleUp} className="debugButton up">
+      {/* <button onClick={handleUp} className="debugButton up">
         <span className="material-icons">arrow_upward</span>
-      </button>
-      <button onClick={handleLeft} className="debugButton left">
+      </button> */}
+      <button title="Step Back"onClick={handleLeft} className="debugButton left">
         <span className="material-icons">arrow_back</span>
       </button>
-      <button onClick={handleRight} className="debugButton right">
+      <button title="Step Forward"onClick={handleRight} className="debugButton right">
         <span className="material-icons">arrow_forward</span>
       </button>
     </div>
