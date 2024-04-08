@@ -8,6 +8,8 @@ import SidePane from './SidePane';
 import TextEditor from './TextEditor'
 import Node from './Node'
 import Edge from './Edge';
+import CommentNode from './CommentNode';
+import CommentInput from './CommentInput';
 import { Constants } from '../Constants'
 
 
@@ -115,6 +117,65 @@ export default function Editor() {
         setEdges((eds) => addEdge({ id: getEdgeId(), ...params, label: '---', ...EDGE_DEFAULTS }, eds))
     }, [setEdges]);
 
+    const [isAddingComment, setIsAddingComment] = useState(false);
+    const [newCommentPosition, setNewCommentPosition] = useState(null);
+    const [newCommentText, setNewCommentText] = useState("");
+
+    const onAddCommentButton = useCallback((event) => {
+        setIsAddingComment(true)
+    }, [setIsAddingComment])
+
+    const onOffAddCommentButton = useCallback((event) => {
+        setIsAddingComment(false)
+    }, [setIsAddingComment])
+
+    const handleAddComment = useCallback((position, commentText) => {
+        const commentNodeId = getNodeId(); // You would need to ensure this is a unique ID
+        const newCommentNode = {
+            id: commentNodeId,
+            type: 'commentNode', // This type corresponds to your CommentNode component
+            position,
+            data: { text: commentText },
+        };
+        setNodes((nds) => nds.concat(newCommentNode));
+    }, [setNodes]);
+
+    const handleCanvasClick = useCallback((event) => {
+        if (!isAddingComment) return; // Exit if not in the comment-adding mode
+      
+        // Calculate the position where the comment should be placed
+        const position = reactFlowInstance.screenToFlowPosition({
+          x: event.clientX-50,
+          y: event.clientY-30,
+        });
+      
+        // Set the position state for the new comment
+        setNewCommentPosition({ client: { x: event.clientX, y: event.clientY }, flow: position });
+        // No change needed for setIsAddingComment here since it stays true until submission or cancellation
+      
+        // Focus the input (if using ref in CommentInput, otherwise manage focus within CommentInput)
+      }, [isAddingComment, reactFlowInstance]);
+      
+      const handleSubmitComment = useCallback(() => {
+        // Verify the input is not empty and newCommentPosition is set
+        if (newCommentText.trim() !== "" && newCommentPosition) {
+          // Add the comment as a node
+          handleAddComment(newCommentPosition.flow, newCommentText.trim());
+      
+          // Reset states for the next comment
+          setNewCommentText("");
+          setNewCommentPosition(null);
+          setIsAddingComment(false); // Optionally keep it true if you want to add another comment right away
+        }
+      }, [newCommentPosition, newCommentText, handleAddComment]);
+      
+      const handleCancelComment = useCallback(() => {
+        // Reset states without adding the comment
+        setNewCommentText("");
+        setNewCommentPosition(null);
+        setIsAddingComment(false);
+      }, []);
+      
     // allow the 'move' drag effect on the create new node icon
     const onDragStart = (e) => {
         e.dataTransfer.effectAllowed = 'move';
@@ -142,13 +203,13 @@ export default function Editor() {
         setNodes((nds) => nds.concat(newNode));
     }, [setNodes, reactFlowInstance])
 
-    const nodeTypes = useMemo(() => ({ custom: Node }), []);
+    const nodeTypes = useMemo(() => ({ custom: Node, commentNode: CommentNode }), []);
     const edgeTypes = useMemo(() => ({ custom: Edge }), []);
 
     return (
         <div style={{ display: 'flex', width: '100vw', height: '100vh',overflow: 'hidden' }}>
             <div style={{ width: '80px', backgroundColor: '#333', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <SideToolbar onDragStart={onDragStart} setIsPane={setIsPaneOpen} />
+                <SideToolbar onDragStart={onDragStart} setIsPane={setIsPaneOpen} onComment={onAddCommentButton} onCommentOff={onOffAddCommentButton} isAddingComment={isAddingComment} />
             </div>
             <div style={{ flex: 1, position: 'relative'}}>
             <TopTitlebar style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 2, height: '50px' }} />
@@ -184,6 +245,7 @@ export default function Editor() {
                     onInit={setReactFlowInstance}
                     onDrop={onDrop}
                     onDragOver={onDragOver}
+                    onPaneClick={handleCanvasClick}
                     onNodeMouseEnter={(_, node) => setHoveredNodeId(node.id)}
                     onNodeMouseLeave={() => setHoveredNodeId(null)}
                     fitView
@@ -193,6 +255,28 @@ export default function Editor() {
                 >
                     <Controls/>
                     <Background id="1" variant={Constants.editor.DEFAULT_BACKGROUND_TYPE} gap={12} size={1} />
+
+                    {
+                        isAddingComment && newCommentPosition && (
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    top: newCommentPosition.client.y-60,
+                                    left: newCommentPosition.client.x-150,
+                                    zIndex: 999, // Ensure it's above other elements
+                                }}
+                            >
+                                <CommentInput
+                                    autoFocus
+                                    onSubmit={handleSubmitComment}
+                                    onCancel={handleCancelComment}
+                                    value={newCommentText}
+                                    onChange={setNewCommentText}
+                            />
+                            </div>
+                        )
+                    }
+
                 </ReactFlow>
                 </div>
                 <SidePane 

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './../SideToolBar.css'
 
 
-const SideToolbar = ({ onDragStart, setIsPane }) => {
+const SideToolbar = ({ onDragStart, setIsPane, isAddingComment, onComment, onCommentOff }) => {
 
     const [zoomLevel, setZoomLevel] = useState(1); // Initial zoom level
     const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 }); // Initial canvas position
@@ -17,6 +17,7 @@ const SideToolbar = ({ onDragStart, setIsPane }) => {
 
     // Function to handle undo action
     const handleUndo = () => {
+        onCommentOff();
         // Retrieve the last action from undo history and revert it
         const lastAction = undoHistory.pop();
         if (lastAction) {
@@ -30,6 +31,7 @@ const SideToolbar = ({ onDragStart, setIsPane }) => {
 
     // Function to handle redo action
     const handleRedo = () => {
+        onCommentOff();
         // Retrieve the last undone action from redo history and reapply it
         const lastRedoAction = redoHistory.pop();
         if (lastRedoAction) {
@@ -87,6 +89,7 @@ const SideToolbar = ({ onDragStart, setIsPane }) => {
 
     // Function to handle adding a state
     const handleAddState = (event) => {
+        onCommentOff();
         // Get the position where the state is added
         const x = event.clientX - event.currentTarget.getBoundingClientRect().left - 20; // Adjust based on icon size
         const y = event.clientY - event.currentTarget.getBoundingClientRect().top - 20; // Adjust based on icon size
@@ -117,20 +120,22 @@ const SideToolbar = ({ onDragStart, setIsPane }) => {
     };
 
     const handleDraw = (event) => {
-
+        onCommentOff(event);
     };
 
     const handleComment = (event) => {
-
+        onComment(event)
     };
 
     const navigate = useNavigate();
     const handleHome = (event) =>{
+        onCommentOff();
         navigate('/');
     }
 
     // Toggle side pane
     const toggleSidePane = () => {
+        onCommentOff();
         setIsPaneOpen(!isPaneOpen);
         setIsPane(!isPaneOpen)
     };
@@ -149,7 +154,7 @@ const SideToolbar = ({ onDragStart, setIsPane }) => {
             <button className="toolbar-btn" onClick={() => handleDraw()} title="Draw">
                 <span className="material-icons">draw</span>
             </button>
-            <button className="toolbar-btn" onClick={() => handleComment()} title="Comment">
+            <button className="toolbar-btn" onClick={() => handleComment()} title="Comment" style={{ backgroundColor: isAddingComment ? '#b0aeae': '#424242' }}>
                 <span className="material-icons">comment</span>
             </button>
             <button className="toolbar-btn" onClick={handleUndo} title="Undo">
