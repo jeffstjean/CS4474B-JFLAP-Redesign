@@ -8,8 +8,9 @@ export const Constants = {
         TEXT_COLOR: '#FFFFFF',
         STROKE_COLOR: '#000000',
         STROKE_WIDTH: 1,
-        HOVERED_STROKE_COLOR: 'red',
-        HOVERED_STROKE_WIDTH: 2,
+        HOVERED_STROKE_COLOR: '111111',
+        HOVERED_STROKE_WIDTH: 1.5,
+        HOVERED_BACKGROUND_COLOR: '#8338b0',
         DEFAULT_DIAMETER: 75,
     },
 
