@@ -6,6 +6,7 @@
     color: #fff;
     padding: 10px 20px;
     border-bottom: 1px solid #ccc;
+    position: relative;
 }
 
 .menu-item {
@@ -16,9 +17,20 @@
 .project-title {
     flex-grow: 1;
     margin: 0 10px;
+    font-size: 24px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
 }
 
 .saved-indicator,
 .collapse-icon {
     margin-left: 10px;
+}
+
+.top-titlebar {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
 }
