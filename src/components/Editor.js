@@ -151,8 +151,8 @@ export default function Editor() {
                 <SideToolbar onDragStart={onDragStart} setIsPane={setIsPaneOpen} />
             </div>
             <div style={{ flex: 1, position: 'relative'}}>
-            <TopTitlebar style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 1000, height: '50px' }} />
-            <div style={{display: 'flex', width: '100vw', height: 'calc(100vh - 50px)',overflow: 'hidden' }}>
+            <TopTitlebar style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 2, height: '50px' }} />
+            <div style={{display: 'flex', width: 'auto', height: 'calc(100vh - 50px)',overflow: 'hidden' }}>
                 <ReactFlow
                     nodes={nodes.map(node => ({
                         ...node,

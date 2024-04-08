@@ -44,7 +44,7 @@ const Toolbar = () => {
                 display: flex;
                 gap: 0px;
                 font-size: 20px;
-                margin-left: -18px;
+                margin-left: 10px;
                 }
 
                 .tool-bar-item {
