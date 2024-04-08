@@ -19,10 +19,10 @@
 
 .table-nodes-edges th,
 .table-nodes-edges td {
-    padding: 12px 15px;
+    padding: 5px 5px;
     border-right: 1px solid #dddddd; /* Add right border to both th and td */
-    width: 25px; /* Fixed width for each cell */
-    height: 25px; /* Fixed height for each cell */
+    width: 10px; /* Fixed width for each cell */
+    height: 15px; /* Fixed height for each cell */
     overflow: hidden; /* Ensures content does not overflow the cell dimensions */
     text-overflow: ellipsis; /* Adds an ellipsis if the text overflows */
     white-space: nowrap; /* Keeps the content on a single line */
