@@ -5,6 +5,18 @@
     background: #ffffff; /* Dark background */
     padding: 10px;
   }
+
+  .debugMenu.disabled {
+    opacity: 0.5;
+    pointer-events: none; /* Disables interaction */
+  }
+  
+  .debugMenu.disabled .debugButton {
+    background-color: #464646; /* Grey out buttons */
+    cursor: default; /* Change cursor to indicate non-interactive state */
+  }
+  
+
   
   .debugButton {
     display: inline-block;

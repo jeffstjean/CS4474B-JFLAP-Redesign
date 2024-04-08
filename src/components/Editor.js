@@ -64,7 +64,13 @@ export default function Editor() {
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [hoveredNodeId, setHoveredNodeId] = useState(null);
+    const [hoveredEdgeId, setHoveredEdgeId] = useState(null);
 
+    const errorMessages = [
+        "Error: Node ID 'A' is missing",
+        "Warning: Edge ID 'E1' is not connected to any node",
+        "Error: Invalid input data format",
+      ];
     // track state of editing ID and text
     const [editingNodeId, setEditingNodeId] = useState(null);
     const [editingNodeText, setEditingNodeText] = useState('');
@@ -167,6 +173,7 @@ export default function Editor() {
                         ...edge,
                         data: {
                             ...edge.data,
+                            shouldHover: edge.id === hoveredEdgeId,
                             label: edge.label,
                             onLabelDoubleClick: () => setEditingEdgeId(edge.id),
                             onLabelChange: onLabelChange,
@@ -192,7 +199,18 @@ export default function Editor() {
                     <Controls />
                     <Background variant={Constants.editor.DEFAULT_BACKGROUND_TYPE} gap={12} size={1} />
                 </ReactFlow>
-                <SidePane isOpen={isPaneOpen} onClose={() => setIsPaneOpen(false)} nodes={nodes} edges={edges} setHoveredNodeId={setHoveredNodeId} hoveredNodeId={hoveredNodeId} />
+                <SidePane 
+                isOpen={isPaneOpen}
+                onClose={() => setIsPaneOpen(false)} 
+                nodes={nodes} 
+                edges={edges} 
+                setHoveredNodeId={setHoveredNodeId} 
+                hoveredNodeId={hoveredNodeId} 
+                errors={errorMessages} 
+                hoveredEdgeId={hoveredEdgeId}
+                setHoveredEdgeId={setHoveredEdgeId}
+
+                />
             </div>
         </div>
     );

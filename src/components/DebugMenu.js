@@ -1,7 +1,7 @@
 import React from 'react';
 import './../DebugMenu.css'; // Ensure to create DebugMenu.css
 
-const DebugMenu = () => {
+const DebugMenu = ({isError}) => {
   // Define your debug functions here
   const handlePlay = () => {
     console.log('Play clicked');
@@ -29,7 +29,7 @@ const DebugMenu = () => {
   };
 
   return (
-    <div className="debugMenu">
+    <div className={`debugMenu ${isError ? 'disabled' : ''}`}>
       <button onClick={handlePlay} className="debugButton play">
         <span className="material-icons">play_arrow</span>
       </button>
