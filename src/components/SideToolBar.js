@@ -14,7 +14,17 @@ const SideToolbar = ({ onDragStart, setIsPane }) => {
     const [draggingState, setDraggingState] = useState(null); // State to track the state being dragged
     const [states, setStates] = useState([]); // State to store added states
     const [isPaneOpen, setIsPaneOpen] = useState(false); // Track if the side pane is open
+    const [selectedButton, setSelectedButton] = useState(null);
 
+    const handleButtonClick = (buttonName) => {
+        if (selectedButton === buttonName) {
+            // Deselect the button if clicked again
+            setSelectedButton(null);
+        } else {
+            // Select the clicked button
+            setSelectedButton(buttonName);
+        }
+    }
     // Function to handle undo action
     const handleUndo = () => {
         // Retrieve the last action from undo history and revert it
@@ -117,22 +127,23 @@ const SideToolbar = ({ onDragStart, setIsPane }) => {
     };
 
     const handleDraw = (event) => {
-
+        handleButtonClick('draw');
     };
 
     const handleComment = (event) => {
-
+        handleButtonClick('comment');
     };
 
     const navigate = useNavigate();
-    const handleHome = (event) =>{
+    const handleHome = (event) => {
         navigate('/');
     }
 
     // Toggle side pane
     const toggleSidePane = () => {
         setIsPaneOpen(!isPaneOpen);
-        setIsPane(!isPaneOpen)
+        setIsPane(!isPaneOpen);
+        handleButtonClick('togglePane');
     };
     // Decide which icon to display based on isPaneOpen state
     const sidePaneIcon = isPaneOpen ? "chevron_right" : "chevron_left";
@@ -146,10 +157,18 @@ const SideToolbar = ({ onDragStart, setIsPane }) => {
             <button className="toolbar-btn" onClick={handleAddState} title="Add Node" onDragStart={onDragStart} draggable>
                 <span className="material-icons">radio_button_unchecked</span>
             </button>
-            <button className="toolbar-btn" onClick={() => handleDraw()} title="Draw">
+            <button
+                className={`toolbar-btn ${selectedButton === 'draw' ? 'selected' : ''}`}
+                onClick={handleDraw}
+                title="Draw"
+            >
                 <span className="material-icons">draw</span>
             </button>
-            <button className="toolbar-btn" onClick={() => handleComment()} title="Comment">
+            <button
+                className={`toolbar-btn ${selectedButton === 'comment' ? 'selected' : ''}`}
+                onClick={handleComment}
+                title="Comment"
+            >
                 <span className="material-icons">comment</span>
             </button>
             <button className="toolbar-btn" onClick={handleUndo} title="Undo">
@@ -158,10 +177,14 @@ const SideToolbar = ({ onDragStart, setIsPane }) => {
             <button className="toolbar-btn" onClick={handleRedo} title="Redo">
                 <span className="material-icons">redo</span>
             </button>
-            <button className="toolbar-btn" onClick={toggleSidePane} title="Open/Close Side Pane">
-                <span 
+            <button
+                className={`toolbar-btn ${selectedButton === 'togglePane' ? 'selected' : ''}`}
+                onClick={toggleSidePane}
+                title="Open/Close Side Pane"
+            >
+                <span
                     className="material-icons"
-                    style={{ transform: isPaneOpen ?  'none' : 'rotate(180deg)' }}
+                    style={{ transform: isPaneOpen ? 'none' : 'rotate(180deg)' }}
                 >
                     double_arrow
                 </span>
