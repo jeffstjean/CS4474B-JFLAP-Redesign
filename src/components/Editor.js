@@ -10,7 +10,6 @@ import Node from './Node'
 import Edge from './Edge';
 import { Constants } from '../Constants'
 
-import 'reactflow/dist/style.css';
 
 const NODE_DEFAULTS = {
     type: 'custom',
@@ -193,7 +192,7 @@ export default function Editor() {
                     connectionMode="loose"
                 >
                     <Controls />
-                    <Background variant={Constants.editor.DEFAULT_BACKGROUND_TYPE} gap={12} size={1} />
+                    <Background id="1" variant={Constants.editor.DEFAULT_BACKGROUND_TYPE} gap={12} size={1} />
                 </ReactFlow>
                 <SidePane 
                 isOpen={isPaneOpen}

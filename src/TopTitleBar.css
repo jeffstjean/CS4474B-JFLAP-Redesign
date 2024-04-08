@@ -22,6 +22,7 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
+    font-family: Ubuntu;
 }
 
 .saved-indicator,
@@ -33,4 +34,33 @@
     display: flex;
     justify-content: space-between;
     position: relative;
+}
+
+.project-title-input {
+    flex-grow: 1;
+    margin: 0 10px;
+    font-size: 24px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    background: none;
+    border: none;
+    text-align: center;
+    font-size: 1.5em;
+    color: white; 
+    /* // Adjust the color as needed */
+    font-family: 'Ubuntu', sans-serif;
+    /* // Adjust the font family as needed */
+    
+    /* // When the user clicks on the input, there will be no border or outline */
+    outline: none;
+    border-bottom: 1px solid transparent;
+    /* // Invisible border by default */
+
+    /* // When the input is focused, show the border indicating it's editable */
+    &:focus {
+        border-bottom: 1px solid white; 
+        /* // Change as needed */
+    }
 }
