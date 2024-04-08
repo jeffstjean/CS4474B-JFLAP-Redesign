@@ -69,31 +69,31 @@ const savedProjects = [
     {
       id: 1,
       title: "My Project 1",
-      img: "https://cdn.builder.io/api/v1/image/assets/TEMP/2bfb759220d114652a5d38bf6f00ea39751620daf2ffdb6aaf41fb93911d5fdc?apiKey=f85ade9d92be4e92bf330987900cae47&width=300",
+      img: "https://cdn.builder.io/api/v1/image/assets/TEMP/59804eb1466f9f52116532242a6b46bb1a9df24213e3c0f0c9a9c2feb5d82616?apiKey=f85ade9d92be4e92bf330987900cae47&width=300",
       lastEdited: "a few seconds ago"
     },
     {
         id: 2,
         title: "My Project Demo",
-        img: "https://cdn.builder.io/api/v1/image/assets/TEMP/2bfb759220d114652a5d38bf6f00ea39751620daf2ffdb6aaf41fb93911d5fdc?apiKey=f85ade9d92be4e92bf330987900cae47&width=300",
+        img: "https://cdn.builder.io/api/v1/image/assets/TEMP/59804eb1466f9f52116532242a6b46bb1a9df24213e3c0f0c9a9c2feb5d82616?apiKey=f85ade9d92be4e92bf330987900cae47&width=300",
         lastEdited: "69 minutes ago"
       },
       {
         id: 3,
         title: "CS3331 A2",
-        img: "https://cdn.builder.io/api/v1/image/assets/TEMP/2bfb759220d114652a5d38bf6f00ea39751620daf2ffdb6aaf41fb93911d5fdc?apiKey=f85ade9d92be4e92bf330987900cae47&width=300",
+        img: "https://cdn.builder.io/api/v1/image/assets/TEMP/59804eb1466f9f52116532242a6b46bb1a9df24213e3c0f0c9a9c2feb5d82616?apiKey=f85ade9d92be4e92bf330987900cae47&width=300",
         lastEdited: "an hour ago"
       },
       {
         id: 4,
         title: "DUMMY PDAaaaaaaaaaaa",
-        img: "https://cdn.builder.io/api/v1/image/assets/TEMP/2bfb759220d114652a5d38bf6f00ea39751620daf2ffdb6aaf41fb93911d5fdc?apiKey=f85ade9d92be4e92bf330987900cae47&width=300",
+        img: "https://cdn.builder.io/api/v1/image/assets/TEMP/59804eb1466f9f52116532242a6b46bb1a9df24213e3c0f0c9a9c2feb5d82616?apiKey=f85ade9d92be4e92bf330987900cae47&width=300",
         lastEdited: "420 days ago"
       },
       {
         id: 5,
         title: "My Project 5",
-        img: "https://cdn.builder.io/api/v1/image/assets/TEMP/2bfb759220d114652a5d38bf6f00ea39751620daf2ffdb6aaf41fb93911d5fdc?apiKey=f85ade9d92be4e92bf330987900cae47&width=300",
+        img: "https://cdn.builder.io/api/v1/image/assets/TEMP/59804eb1466f9f52116532242a6b46bb1a9df24213e3c0f0c9a9c2feb5d82616?apiKey=f85ade9d92be4e92bf330987900cae47&width=300",
         lastEdited: "a few seconds ago"
       },
     // ... more projects
