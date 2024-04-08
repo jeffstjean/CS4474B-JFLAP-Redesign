@@ -10,7 +10,7 @@ export const Constants = {
         STROKE_WIDTH: 1,
         HOVERED_STROKE_COLOR: '111111',
         HOVERED_STROKE_WIDTH: 1.5,
-        HOVERED_BACKGROUND_COLOR: '#8338b0',
+        HOVERED_BACKGROUND_COLOR: '#7e24b3',
         DEFAULT_DIAMETER: 75,
     },
 
