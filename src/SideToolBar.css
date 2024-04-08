@@ -1,15 +1,21 @@
 .sidetoolbar {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centered vertically */
-    align-items: center; /* Centered horizontally */
+    justify-content: center;
+    /* Centered vertically */
+    align-items: center;
+    /* Centered horizontally */
     background-color: #242424;
     color: #fff;
     width: 80px;
-    height: 100vh; /* Use vh for full viewport height */
-    position: fixed; /* Fixed position to stay in place during scrolling */
-    top: 0; /* Align to the top */
-    left: 0; /* Align to the left side */
+    height: 100vh;
+    /* Use vh for full viewport height */
+    position: fixed;
+    /* Fixed position to stay in place during scrolling */
+    top: 0;
+    /* Align to the top */
+    left: 0;
+    /* Align to the left side */
     z-index: 1;
 }
 
@@ -36,15 +42,37 @@
     outline: none;
 }
 
+.toolbar-btn.selected {
+    background-color: #4caf50;
+    /* Green background for selected buttons */
+    color: #ffffff;
+    /* White text for selected buttons */
+    /* Add more styles as needed to indicate selected state */
+}
+
 /* Add this new class for the separator */
 .separator {
-    width: 60%; /* adjust width as needed */
-    height: 2px; /* thickness of the separator line */
-    background-color: #ea9c14; /* color of the separator line */
-    margin-bottom: 15px; 
+    width: 60%;
+    /* adjust width as needed */
+    height: 2px;
+    /* thickness of the separator line */
+    background-color: #ea9c14;
+    /* color of the separator line */
+    margin-bottom: 15px;
     margin-top: 5px;
 }
 
 .white-icon {
     fill: white;
+}
+
+.toolbar-btn.sidepane-toggle {
+    position: fixed;
+    /* Fixed position relative to the viewport */
+    top: 55px;
+    /* Adjust this value as needed to position from the top */
+    right: 1px;
+    /* Adjust this value as needed to position from the right */
+    z-index: 5;
+    /* Ensures it stays above other elements */
 }
