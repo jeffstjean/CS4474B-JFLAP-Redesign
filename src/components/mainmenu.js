@@ -53,6 +53,7 @@ const renderDropdownMenu = (menuName) => (
 
 return (
     <header className="top-bar">
+    {/*
     <nav className="tool-bar">
         {Object.keys(menuOptions).map((menuName) => (
         <div key={menuName} className="tool-bar-item" onClick={() => handleMenuClick(menuName)}>
@@ -61,6 +62,7 @@ return (
         </div>
         ))}
     </nav>
+        */}
     <h1 className="title">JFLAP: The Better Version</h1>
     </header>
 );
@@ -259,6 +261,7 @@ function MainMenu() {
           margin: auto;
           font: 500 36px Ubuntu, sans-serif;
           text-align: center;
+          font-weight: 700
         }
 
         .main-content {

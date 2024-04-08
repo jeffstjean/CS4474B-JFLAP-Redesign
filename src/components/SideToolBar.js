@@ -4,6 +4,7 @@ import './../SideToolBar.css'
 
 
 const SideToolbar = ({ onDragStart, setIsPane }) => {
+
     const [zoomLevel, setZoomLevel] = useState(1); // Initial zoom level
     const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 }); // Initial canvas position
     const [undoHistory, setUndoHistory] = useState([]); // Array to store undo history
