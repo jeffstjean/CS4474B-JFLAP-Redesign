@@ -143,7 +143,7 @@ const SideToolbar = ({ onDragStart, setIsPane }) => {
                 <span className="material-icons">home</span>
             </button>
             <div className="separator"></div>
-            <button className="toolbar-btn" onClick={handleAddState} title="Add State" onDragStart={onDragStart} draggable>
+            <button className="toolbar-btn" onClick={handleAddState} title="Add Node" onDragStart={onDragStart} draggable>
                 <span className="material-icons">radio_button_unchecked</span>
             </button>
             <button className="toolbar-btn" onClick={() => handleDraw()} title="Draw">
