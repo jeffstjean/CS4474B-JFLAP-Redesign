@@ -14,7 +14,7 @@ const SidePane = ({ isOpen, onClose, nodes, edges, setHoveredNodeId, hoveredNode
             <div className="App">
                 <DebugMenu isError={isError}/>
                 <NodesEdgesTable 
-                 nodes={nodes}
+                 nodes={nodes.filter(n => n.data.label )}
                  edges={edges} 
                  setHoveredNodeId={setHoveredNodeId} 
                  hoveredNodeId={hoveredNodeId} 
