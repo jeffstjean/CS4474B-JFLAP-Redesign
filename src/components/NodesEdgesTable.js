@@ -41,7 +41,7 @@ const nodeRows = nodes.map((node) => (
     <table className="table-nodes-edges">
       <thead>
         <tr>
-          <th>State / Transition</th>
+          <th></th>
           {edgeHeadings}
         </tr>
       </thead>

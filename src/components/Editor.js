@@ -63,11 +63,12 @@ export default function Editor() {
     const [hoveredNodeId, setHoveredNodeId] = useState(null);
     const [hoveredEdgeId, setHoveredEdgeId] = useState(null);
 
-    const errorMessages = [
-        "Error: Node ID 'A' is missing",
-        "Warning: Edge ID 'E1' is not connected to any node",
-        "Error: Invalid input data format",
-      ];
+    // const errorMessages = [
+    //     "Error: Node ID 'A' is missing",
+    //     "Warning: Edge ID 'E1' is not connected to any node",
+    //     "Error: Invalid input data format",
+    //   ];
+    const errorMessages =[]
     // track state of editing ID and text
     const [editingNodeId, setEditingNodeId] = useState(null);
     const [editingNodeText, setEditingNodeText] = useState('');
