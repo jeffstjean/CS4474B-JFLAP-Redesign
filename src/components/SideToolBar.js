@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { render } from "react-dom";
+import { useNavigate } from 'react-router-dom';
 import './../SideToolBar.css'
 
 
@@ -12,6 +13,7 @@ const SideToolbar = ({ onDragStart, setIsPane }) => {
     const [isDragging, setIsDragging] = useState(false); // State to track if dragging
     const [draggingState, setDraggingState] = useState(null); // State to track the state being dragged
     const [states, setStates] = useState([]); // State to store added states
+    const [isPaneOpen, setIsPaneOpen] = useState(false); // Track if the side pane is open
 
     // Function to handle undo action
     const handleUndo = () => {
@@ -122,8 +124,25 @@ const SideToolbar = ({ onDragStart, setIsPane }) => {
 
     };
 
+    const navigate = useNavigate();
+    const handleHome = (event) =>{
+        navigate('/');
+    }
+
+    // Toggle side pane
+    const toggleSidePane = () => {
+        setIsPaneOpen(!isPaneOpen);
+        setIsPane(!isPaneOpen)
+    };
+    // Decide which icon to display based on isPaneOpen state
+    const sidePaneIcon = isPaneOpen ? "chevron_right" : "chevron_left";
+
     return (
         <div className="sidetoolbar">
+            <button className="toolbar-btn" onClick={handleHome} title="Return to Main Menu">
+                <span className="material-icons">home</span>
+            </button>
+            <div className="separator"></div>
             <button className="toolbar-btn" onClick={handleAddState} title="Add State" onDragStart={onDragStart} draggable>
                 <span className="material-icons">radio_button_unchecked</span>
             </button>
@@ -139,8 +158,13 @@ const SideToolbar = ({ onDragStart, setIsPane }) => {
             <button className="toolbar-btn" onClick={handleRedo} title="Redo">
                 <span className="material-icons">redo</span>
             </button>
-            <button className="toolbar-btn" onClick={() => setIsPane(true)} title="Open Side Pane">
-                <span className="material-icons">double_arrow</span>
+            <button className="toolbar-btn" onClick={toggleSidePane} title="Open/Close Side Pane">
+                <span 
+                    className="material-icons"
+                    style={{ transform: isPaneOpen ?  'none' : 'rotate(180deg)' }}
+                >
+                    double_arrow
+                </span>
             </button>
         </div>
     );

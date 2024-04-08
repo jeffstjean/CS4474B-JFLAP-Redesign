@@ -7,6 +7,10 @@
     padding: 10px 20px;
     border-bottom: 1px solid #ccc;
     position: relative;
+    z-index: 2;
+    border-bottom: 1px solid #ea9c14;
+    margin-left: -100px;
+    margin-right: -100px;
 }
 
 .menu-item {

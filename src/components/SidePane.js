@@ -11,7 +11,6 @@ const SidePane = ({ isOpen, onClose, nodes, edges, setHoveredNodeId, hoveredNode
         <div className="sidePane">
             <h2>Simulation</h2>
             <p>Run your automata.</p>
-            <button onClick={onClose} className="closeButton">X</button>
             <div className="App">
                 <DebugMenu isError={isError}/>
                 <NodesEdgesTable 
