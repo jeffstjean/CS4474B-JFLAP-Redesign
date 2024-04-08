@@ -145,6 +145,10 @@ export default function Editor() {
     const nodeTypes = useMemo(() => ({ custom: Node }), []);
     const edgeTypes = useMemo(() => ({ custom: Edge }), []);
 
+    const graphStyle = {
+        backgroundColor: Constants.editor.BACKGROUND_COLOR,
+    }
+
     return (
         <div style={{ display: 'flex', width: '100vw', height: '100vh',overflow: 'hidden' }}>
             <div style={{ width: '80px', backgroundColor: '#333', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -190,9 +194,10 @@ export default function Editor() {
                     nodeTypes={nodeTypes}
                     edgeTypes={edgeTypes}
                     connectionMode="loose"
+                    style={graphStyle}
                 >
                     <Controls/>
-                    <Background id="1" variant={Constants.editor.DEFAULT_BACKGROUND_TYPE} gap={12} size={1} />
+                    <Background id="1" variant={Constants.editor.DEFAULT_BACKGROUND_TYPE} gap={12} size={1} color={Constants.editor.GRID_COLOR} />
                 </ReactFlow>
                 </div>
                 <SidePane 

@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState, useRef, useEffect } from 'react';
 import { getStraightPath, Position, useStore, BaseEdge, EdgeLabelRenderer } from 'reactflow';
+import { Constants } from '../Constants';
 
 const getNodeIntersectionCircle = (intersectionNode, targetNode) => {
     const {
@@ -162,7 +163,7 @@ export default function Edge ({ id, source, target, markerEnd, style, selected, 
 
     const edgeStyle = {
         ...style,
-        stroke: selected ? '#036BFC' : (style.color ?? "#000000")
+        stroke: selected ? Constants.edge.SELECTED_STROKE_COLOR : Constants.edge.STROKE_COLOR
     }
 
     return (
