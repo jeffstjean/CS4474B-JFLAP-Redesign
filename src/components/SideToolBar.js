@@ -178,14 +178,14 @@ const SideToolbar = ({ onDragStart, setIsPane }) => {
                 <span className="material-icons">redo</span>
             </button>
             <button
-                className={`toolbar-btn ${selectedButton === 'togglePane' ? 'selected' : ''}`}
+                className="toolbar-btn sidepane-toggle"
                 onClick={toggleSidePane}
                 title="Open/Close Side Pane"
+                style={{
+                    transform: `translateX(${isPaneOpen ? '-530px' : '0px'}) ${isPaneOpen ? 'rotate(0deg)' : 'rotate(180deg)'}`
+                }}
             >
-                <span
-                    className="material-icons"
-                    style={{ transform: isPaneOpen ? 'none' : 'rotate(180deg)' }}
-                >
+                <span className="material-icons">
                     double_arrow
                 </span>
             </button>
