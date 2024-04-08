@@ -126,7 +126,7 @@ export default function Editor() {
         e.dataTransfer.dropEffect = 'move';
     }, []);
 
-    // when dropped, create a new code at the mouse location
+    // when dropped, create a new node at the mouse location
     const onDrop = useCallback(e => {
         e.preventDefault();
         const mousePosition = reactFlowInstance.screenToFlowPosition({ x: e.clientX, y: e.clientY });
@@ -146,13 +146,13 @@ export default function Editor() {
     const edgeTypes = useMemo(() => ({ custom: Edge }), []);
 
     return (
-        <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
+        <div style={{ display: 'flex', width: '100vw', height: '100vh',overflow: 'hidden' }}>
             <div style={{ width: '80px', backgroundColor: '#333', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <SideToolbar onDragStart={onDragStart} setIsPane={setIsPaneOpen} />
             </div>
-            <div style={{ flex: 1 }}>
-                <TopTitlebar />
-
+            <div style={{ flex: 1, position: 'relative'}}>
+            <TopTitlebar style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 1000, height: '50px' }} />
+            <div style={{display: 'flex', width: '100vw', height: 'calc(100vh - 50px)',overflow: 'hidden' }}>
                 <ReactFlow
                     nodes={nodes.map(node => ({
                         ...node,
@@ -191,9 +191,10 @@ export default function Editor() {
                     edgeTypes={edgeTypes}
                     connectionMode="loose"
                 >
-                    <Controls />
+                    <Controls/>
                     <Background id="1" variant={Constants.editor.DEFAULT_BACKGROUND_TYPE} gap={12} size={1} />
                 </ReactFlow>
+                </div>
                 <SidePane 
                 isOpen={isPaneOpen}
                 onClose={() => setIsPaneOpen(false)} 
