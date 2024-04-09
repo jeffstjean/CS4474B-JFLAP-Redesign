@@ -10,7 +10,7 @@
 - `npm start` should automatically open your browser to run the app locally (if not, check the terminal for the link to view the application on your browser)
 
 ## Members
-Mohammed Al Drawish
+Mohammed Al-Darwish
 Marko Ilic
 Anusha Iyengar
 Paige Martin Paz
