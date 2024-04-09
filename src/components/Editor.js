@@ -35,42 +35,22 @@ const EDGE_DEFAULTS = {
 let nodeId = 0;
 const getNodeId = () => `q${nodeId++}`;
 
-
-
-let initialNodes = [
-    { id: getNodeId(), position: { x: -200, y: 30 }, ...NODE_DEFAULTS },
-    { id: getNodeId(), position: { x: 200, y: 30}, ...NODE_DEFAULTS },
-    { id: getNodeId(), position: { x: -225, y: 400}, ...NODE_DEFAULTS },
-    { id: getNodeId(), position: { x: 150, y: 300}, ...NODE_DEFAULTS },
-];
-
-initialNodes = initialNodes.map(n => ({ ...n, data: { ...n.data, label: n.id }}))
-
 let edgeId = 0;
 const getEdgeId = () => `e${edgeId++}`;
 
-const initialEdges = [
-    { id: getEdgeId(), source: 'q0', target: 'q1', label: 'a', ...EDGE_DEFAULTS },
-    { id: getEdgeId(), source: 'q2', target: 'q0', label: 'b', ...EDGE_DEFAULTS },
-    { id: getEdgeId(), source: 'q0', target: 'q2', label: 'c', ...EDGE_DEFAULTS },
-    { id: getEdgeId(), source: 'q2', target: 'q3', label: 'd', ...EDGE_DEFAULTS },
-    { id: getEdgeId(), source: 'q0', target: 'q3', label: 'e', ...EDGE_DEFAULTS },
-    { id: getEdgeId(), source: 'q3', target: 'q1', label: 'f', ...EDGE_DEFAULTS },
-];
-
 export default function Editor() {
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+    const [nodes, setNodes, onNodesChange] = useNodesState([]);
+    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [hoveredNodeId, setHoveredNodeId] = useState(null);
     const [hoveredEdgeId, setHoveredEdgeId] = useState(null);
 
-    // const errorMessages = [
-    //     "Error: Node ID 'A' is missing",
-    //     "Warning: Edge ID 'E1' is not connected to any node",
-    //     "Error: Invalid input data format",
-    //   ];
-    const errorMessages =[]
+    const errorMessages = [
+        "Error: Node ID 'A' is missing",
+        "Warning: Edge ID 'E1' is not connected to any node",
+        "Error: Invalid input data format",
+    ];
+    
     // track state of editing ID and text
     const [editingNodeId, setEditingNodeId] = useState(null);
     const [editingNodeText, setEditingNodeText] = useState('');
@@ -210,7 +190,7 @@ export default function Editor() {
     return (
         <div style={{ display: 'flex', width: '100vw', height: '100vh',overflow: 'hidden' }}>
             <div style={{ width: '80px', backgroundColor: '#333', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <SideToolbar onDragStart={onDragStart} setIsPane={setIsPaneOpen} onComment={onAddCommentButton} onCommentOff={onOffAddCommentButton} isAddingComment={isAddingComment} />
+                <SideToolbar onDragStart={onDragStart} setIsPane={setIsPaneOpen} onComment={onAddCommentButton} onCommentOff={onOffAddCommentButton} isAddingComment={isAddingComment} isEmpty={nodes.length == 0} />
             </div>
             <div style={{ flex: 1, position: 'relative'}}>
             <TopTitlebar style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 2, height: '50px' }} />

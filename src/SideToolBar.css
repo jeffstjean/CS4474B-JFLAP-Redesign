@@ -34,7 +34,7 @@
 }
 
 .toolbar-btn:hover {
-    background-color: #636363;
+    background-color: #636363  !important;
 }
 
 .toolbar-btn:focus,

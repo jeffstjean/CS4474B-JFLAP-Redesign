@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './../SideToolBar.css'
 
 
-const SideToolbar = ({ onDragStart, setIsPane, isAddingComment, onComment, onCommentOff }) => {
+const SideToolbar = ({ onDragStart, setIsPane, isAddingComment, onComment, onCommentOff, isEmpty }) => {
 
     const [zoomLevel, setZoomLevel] = useState(1); // Initial zoom level
     const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 }); // Initial canvas position
@@ -174,10 +174,10 @@ const SideToolbar = ({ onDragStart, setIsPane, isAddingComment, onComment, onCom
             <button className="toolbar-btn" onClick={() => handleComment()} title="Comment" style={{ backgroundColor: isAddingComment ? '#4caf50': '#424242' }}>
                 <span className="material-icons">comment</span>
             </button>
-            <button className="toolbar-btn" onClick={handleUndo} title="Undo">
+            <button className="toolbar-btn" onClick={handleUndo} title="Undo" style={{ backgroundColor: isEmpty ? '#222222': '#424242' }}>
                 <span className="material-icons">undo</span>
             </button>
-            <button className="toolbar-btn" onClick={handleRedo} title="Redo">
+            <button className="toolbar-btn" onClick={handleRedo} title="Redo" style={{ backgroundColor: isEmpty ? '#222222': '#424242' }}>
                 <span className="material-icons">redo</span>
             </button>
             <button
