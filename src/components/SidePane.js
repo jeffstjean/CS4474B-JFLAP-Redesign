@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import './../SidePane.css'; 
 import DebugMenu from './DebugMenu.js'
-import NodesEdgesTable from './NodesEdgesTable'; // Make sure to import NodesEdgesTable
+import NodesEdgesTable from './NodesEdgesTable';
 import ErrorList from './ErrorList.js';
-// Correct the parameter name to match what you're passing from the parent component
+
+
 const SidePane = ({ isOpen, nodes, edges, setHoveredNodeId, hoveredNodeId, errors, hoveredEdgeId, setHoveredEdgeId, simCanRun }) => {
     const [errorsAreOn, setErrorsAreOn] = useState(true)
     errors = errorsAreOn ? errors : []

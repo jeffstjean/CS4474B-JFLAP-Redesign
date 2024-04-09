@@ -4,7 +4,7 @@ import { getStraightPath, Position, useStore, BaseEdge, EdgeLabelRenderer } from
 const getNodeIntersectionCircle = (intersectionNode, targetNode) => {
     const {
         positionAbsolute: intersectionNodePosition,
-        width: diameter, // Assuming width = height for a circle
+        width: diameter,
     } = intersectionNode;
     const radius = diameter / 2;
     const center = {
@@ -12,24 +12,23 @@ const getNodeIntersectionCircle = (intersectionNode, targetNode) => {
         y: intersectionNodePosition.y + radius,
     };
 
-    // Target position, assuming the target is a point
     const targetPosition = {
         x: targetNode.positionAbsolute.x + targetNode.width / 2,
         y: targetNode.positionAbsolute.y + targetNode.height / 2,
     };
 
-    // Calculate direction vector from the center to the target
+    // calculate direction vector from the center to the target
     let dx = targetPosition.x - center.x;
     let dy = targetPosition.y - center.y;
 
-    // Calculate the distance from the center to the target
+    // calculate the distance from the center to the target
     const distance = Math.sqrt(dx * dx + dy * dy);
 
-    // Normalize the direction vector
+    // normalize the direction vector
     dx /= distance;
     dy /= distance;
 
-    // Calculate the intersection point
+    // calculate the intersection point
     const x = center.x + radius * dx;
     const y = center.y + radius * dy;
 
@@ -121,26 +120,22 @@ export default function Edge ({ id, source, target, markerEnd, style, selected, 
     };
 
     const handleChange = (e) => {
-        // Call the onLabelChange handler passed from the Editor
         data.onLabelChange(id, e.target.value);
     };
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            // Finish editing when Enter key is pressed
             labelRef.current.blur();
         }
     };
 
     const handleBlur = () => {
-        setIsEditing(false); // Stop editing when input loses focus
-        // Call the finishLabelEditing handler passed from the Editor
+        setIsEditing(false);
         data.finishLabelEditing(id);
     };
 
-    // Calculate if the edge is mostly horizontal or vertical
+    // calculate if the edge is mostly horizontal or vertical
     const isMostlyHorizontal = Math.abs(tx - sx) > Math.abs(ty - sy);
-    // Decide label offset based on edge orientation
     const labelOffset = isMostlyHorizontal ? { x: 0, y: -10 } : { x: 10, y: 0 };
 
     const labelStyle = {
@@ -150,7 +145,6 @@ export default function Edge ({ id, source, target, markerEnd, style, selected, 
         transform: `translate(-50%, -50%)`,
         pointerEvents: 'all',
         fontSize: '12px',
-        // Choose which side to render the label based on edge slope
         textAlign: isMostlyHorizontal ? 'right' : 'center',
         width: 'max-content',
         maxWidth: '100px',
