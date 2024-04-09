@@ -3,10 +3,9 @@ import './../TopTitleBar.css'
 import Toolbar from './Toolbar';
 
 const TopTitlebar = () => {
-    const [showViewMenu, setShowViewMenu] = useState(false); // State to control visibility of View menu
-    const [projectTitle, setProjectTitle] = useState('My Project'); // Initial state for the project title
+    const [showViewMenu, setShowViewMenu] = useState(false); 
+    const [projectTitle, setProjectTitle] = useState('My Project');
 
-    // Function to toggle visibility of View menu
     const toggleViewMenu = () => {
         setShowViewMenu(!showViewMenu);
     };

@@ -69,7 +69,6 @@ export default function Editor() {
         "Error: Invalid input data format",
     ];
     
-    // track state of editing ID and text
     const [editingNodeId, setEditingNodeId] = useState(null);
     const [editingNodeText, setEditingNodeText] = useState('');
 
@@ -100,10 +99,8 @@ export default function Editor() {
 
     const finishLabelEditing = useCallback((edgeId) => {
         setEditingEdgeId(null);
-        // Optionally update the backend here if needed
     }, [setEditingEdgeId]);
 
-    // update edge array when connections happen
     const [isPaneOpen, setIsPaneOpen] = useState(false);
 
     // on update of edges, modify the edge
@@ -129,10 +126,10 @@ export default function Editor() {
     }, [setIsAddingComment])
 
     const handleAddComment = useCallback((position, commentText) => {
-        const commentNodeId = getNodeId(); // You would need to ensure this is a unique ID
+        const commentNodeId = getNodeId();
         const newCommentNode = {
             id: commentNodeId,
-            type: 'commentNode', // This type corresponds to your CommentNode component
+            type: 'commentNode',
             position,
             data: { text: commentText },
         };
@@ -140,42 +137,32 @@ export default function Editor() {
     }, [setNodes]);
 
     const handleCanvasClick = useCallback((event) => {
-        if (!isAddingComment) return; // Exit if not in the comment-adding mode
+        if (!isAddingComment) return;
       
-        // Calculate the position where the comment should be placed
         const position = reactFlowInstance.screenToFlowPosition({
           x: event.clientX-50,
           y: event.clientY-30,
         });
       
-        // Set the position state for the new comment
         setNewCommentPosition({ client: { x: event.clientX, y: event.clientY }, flow: position });
-        // No change needed for setIsAddingComment here since it stays true until submission or cancellation
-      
-        // Focus the input (if using ref in CommentInput, otherwise manage focus within CommentInput)
       }, [isAddingComment, reactFlowInstance]);
       
       const handleSubmitComment = useCallback(() => {
-        // Verify the input is not empty and newCommentPosition is set
         if (newCommentText.trim() !== "" && newCommentPosition) {
-          // Add the comment as a node
           handleAddComment(newCommentPosition.flow, newCommentText.trim());
       
-          // Reset states for the next comment
           setNewCommentText("");
           setNewCommentPosition(null);
-          setIsAddingComment(false); // Optionally keep it true if you want to add another comment right away
+          setIsAddingComment(false);
         }
       }, [newCommentPosition, newCommentText, handleAddComment]);
       
       const handleCancelComment = useCallback(() => {
-        // Reset states without adding the comment
         setNewCommentText("");
         setNewCommentPosition(null);
         setIsAddingComment(false);
       }, []);
       
-    // allow the 'move' drag effect on the create new node icon
     const onDragStart = (e) => {
         e.dataTransfer.effectAllowed = 'move';
     };

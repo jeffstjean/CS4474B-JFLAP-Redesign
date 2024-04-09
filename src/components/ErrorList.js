@@ -1,5 +1,5 @@
 import React from 'react';
-import './../SidePane.css'; // Assuming you have or will create a corresponding CSS file for styling
+import './../SidePane.css';
 
 const ErrorList = ({ errors }) => {
   if (!errors || errors.length === 0) return null; // Don't render if there are no errors

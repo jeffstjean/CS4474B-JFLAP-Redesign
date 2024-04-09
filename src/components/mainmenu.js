@@ -34,7 +34,7 @@ const ProjectTypes = () => {
 let navigate = useNavigate();
 
 const handleProjectClick = () => {
-    navigate('/editor'); // This will change the route to /editor
+    navigate('/editor');
 };
 
 return (
@@ -43,7 +43,6 @@ return (
         {projects.map((project) => (
         <div key={project.id} className="project-column" onClick={handleProjectClick}>
             <img src={project.image} alt={project.alt} className="project-image" />
-            {/* Add the title and description here if needed */}
         </div>
         ))}
     </div>
@@ -62,10 +61,8 @@ const NewProjects = () => (
   </section>
 );
 
-// Simulate a list of saved projects
+// simulate a list of saved projects
 const savedProjects = [
-    // Add your saved projects here with the appropriate structure
-    // Example:
     {
       id: 1,
       title: "My Project 1",
@@ -96,16 +93,12 @@ const savedProjects = [
         img: "https://cdn.builder.io/api/v1/image/assets/TEMP/59804eb1466f9f52116532242a6b46bb1a9df24213e3c0f0c9a9c2feb5d82616?apiKey=f85ade9d92be4e92bf330987900cae47&width=300",
         lastEdited: "a few seconds ago"
       },
-    // ... more projects
   ];
   
-  // Individual project component
   const Project = ({project }) => {
     const navigate = useNavigate();
   
     const openProject = () => {
-      // Implement navigation or opening the project logic
-        // navigate(`/editor/${project.id}`);
         navigate(`/editor`);
     };
   
@@ -123,9 +116,7 @@ const savedProjects = [
     );
   };
   
-  // YourProjects component updated to use the Project component
   const YourProjects = () => {
-    // Only take the first 4 projects using slice
     const displayedProjects = savedProjects.slice(0, 4);
 
     return (

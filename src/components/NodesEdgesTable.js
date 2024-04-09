@@ -2,13 +2,9 @@ import React from 'react';
 import './../NodesEdgesTable.css';
 
 function NodesEdgesTable({ nodes, edges , hoveredNodeId, setHoveredNodeId, hoveredEdgeId, setHoveredEdgeId}) {
-  // Extract edge IDs for table headings
   const edgeHeadings = edges.map((edge) => (
     <th key={edge.label}>{edge.label}</th>
   ));
-
-  // Map nodes to table rows, including a cell for each edge
- // Inside the NodesEdgesTable component
 
 const nodeRows = nodes.map((node) => (
   <tr key={node.id}>
@@ -26,8 +22,8 @@ const nodeRows = nodes.map((node) => (
       return (
         <td
           key={edge.id}
-          onMouseEnter={() => isConnected && setHoveredEdgeId(edge.id)} // Set hoveredEdgeId when the mouse enters a cell with a valid transition
-          onMouseLeave={() => setHoveredEdgeId(null)} // Reset hoveredEdgeId when the mouse leaves the cell
+          onMouseEnter={() => isConnected && setHoveredEdgeId(edge.id)} 
+          onMouseLeave={() => setHoveredEdgeId(null)}
         >
           {isConnected ? targetNodeLabel : ''}
         </td>
