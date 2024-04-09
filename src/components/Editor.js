@@ -35,12 +35,30 @@ const EDGE_DEFAULTS = {
 let nodeId = 0;
 const getNodeId = () => `q${nodeId++}`;
 
+let initialNodes = [
+    { id: getNodeId(), position: { x: -200, y: 30 }, ...NODE_DEFAULTS },
+    { id: getNodeId(), position: { x: 200, y: 30}, ...NODE_DEFAULTS },
+    { id: getNodeId(), position: { x: -225, y: 400}, ...NODE_DEFAULTS },
+    { id: getNodeId(), position: { x: 150, y: 300}, ...NODE_DEFAULTS },
+];
+
+initialNodes = initialNodes.map(n => ({ ...n, data: { ...n.data, label: n.id }}))
+
 let edgeId = 0;
 const getEdgeId = () => `e${edgeId++}`;
 
+const initialEdges = [
+    { id: getEdgeId(), source: 'q0', target: 'q1', label: 'a', ...EDGE_DEFAULTS },
+    { id: getEdgeId(), source: 'q2', target: 'q0', label: 'b', ...EDGE_DEFAULTS },
+    { id: getEdgeId(), source: 'q0', target: 'q2', label: 'c', ...EDGE_DEFAULTS },
+    { id: getEdgeId(), source: 'q2', target: 'q3', label: 'd', ...EDGE_DEFAULTS },
+    { id: getEdgeId(), source: 'q0', target: 'q3', label: 'e', ...EDGE_DEFAULTS },
+    { id: getEdgeId(), source: 'q3', target: 'q1', label: 'f', ...EDGE_DEFAULTS },
+];
+
 export default function Editor() {
-    const [nodes, setNodes, onNodesChange] = useNodesState([]);
-    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+    const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [hoveredNodeId, setHoveredNodeId] = useState(null);
     const [hoveredEdgeId, setHoveredEdgeId] = useState(null);
@@ -262,6 +280,7 @@ export default function Editor() {
                 </div>
                 <SidePane 
                 isOpen={isPaneOpen}
+                simCanRun={nodes.length != 0}
                 onClose={() => setIsPaneOpen(false)} 
                 nodes={nodes} 
                 edges={edges} 

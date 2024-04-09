@@ -1,18 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './../SidePane.css'; 
 import DebugMenu from './DebugMenu.js'
 import NodesEdgesTable from './NodesEdgesTable'; // Make sure to import NodesEdgesTable
 import ErrorList from './ErrorList.js';
 // Correct the parameter name to match what you're passing from the parent component
-const SidePane = ({ isOpen, onClose, nodes, edges, setHoveredNodeId, hoveredNodeId, errors, hoveredEdgeId, setHoveredEdgeId}) => {
+const SidePane = ({ isOpen, nodes, edges, setHoveredNodeId, hoveredNodeId, errors, hoveredEdgeId, setHoveredEdgeId, simCanRun }) => {
+    const [errorsAreOn, setErrorsAreOn] = useState(true)
+    errors = errorsAreOn ? errors : []
     if (!isOpen) return null;
-    const isError = errors && errors.length >0;
+    const isError = simCanRun && errors && errors.length >0;
     return (
         <div className="sidePane">
             <h2>Simulation</h2>
             <p>Run your automata.</p>
             <div className="App">
-                <DebugMenu isError={isError}/>
+                <DebugMenu isError={isError || !simCanRun}/>
                 <NodesEdgesTable 
                  nodes={nodes.filter(n => n.data.label )}
                  edges={edges} 
@@ -21,6 +23,7 @@ const SidePane = ({ isOpen, onClose, nodes, edges, setHoveredNodeId, hoveredNode
                  hoveredEdgeId={hoveredEdgeId}
                  setHoveredEdgeId={setHoveredEdgeId}
                  />
+                 <button onClick={() => setErrorsAreOn(!errorsAreOn)}>Debug: Toggle Errors</button>
                 <ErrorList errors={errors} />
             </div>
         </div>
