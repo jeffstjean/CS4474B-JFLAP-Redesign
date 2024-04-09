@@ -140,10 +140,14 @@ const SideToolbar = ({ onDragStart, setIsPane, isAddingComment, onComment, onCom
     };
 
     const navigate = useNavigate();
-    const handleHome = (event) =>{
-        onCommentOff();
-        navigate('/');
-    }
+    const handleHome = (event) => {
+        onCommentOff(); // Turn off commenting, if needed
+        // Display native confirm dialog
+        const confirmReturn = window.confirm("Are you sure you want to return to the main menu?");
+        if (confirmReturn) {
+            navigate('/'); // Only navigate if the user confirmed the action
+        }
+    };
 
     // Toggle side pane
     const toggleSidePane = () => {
