@@ -48,6 +48,10 @@
     transform: translateY(2px); /* Slight push down effect to mimic click */
     filter: brightness(85%); /* Darken the button color */
   }
+
+  /* .debugButton.disabled {
+    background-color: #444444;
+  } */
   
   .debugButton.play {
     background-color: #2ecc71;

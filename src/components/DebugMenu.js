@@ -1,7 +1,7 @@
 import React from 'react';
 import './../DebugMenu.css'; // Ensure to create DebugMenu.css
 
-const DebugMenu = ({isError}) => {
+const DebugMenu = ({ isError }) => {
   // Define your debug functions here
   const handlePlay = () => {
     console.log('Play clicked');
